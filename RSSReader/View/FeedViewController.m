@@ -29,10 +29,9 @@
     FeedPresenter *presenter = [[FeedPresenter alloc] initWithArray:self.feedItemArray];
     self.presenter = presenter;
     [presenter release];
-    __block typeof(self) weakSelf = self;
     [self.presenter loadNewsWiithCompletion:^(BOOL success) {
         if (success) {
-            [weakSelf.tableView reloadData];
+            [self.tableView reloadData];
         }
     }];
 }
