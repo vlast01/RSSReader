@@ -18,6 +18,7 @@
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (error) {
+            NSLog(@"loading error");
         } else {
             //    NSError *e = nil;
             dispatch_async(dispatch_get_main_queue(), ^{

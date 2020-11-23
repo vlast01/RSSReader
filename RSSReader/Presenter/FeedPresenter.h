@@ -17,7 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, retain) NSMutableArray* feedItemArray;
 
 - (id)initWithArray:(NSMutableArray<FeedItem*>*)array;
-- (void)loadNewsWiithCompletion:(void(^)(BOOL success))completion;
+//- (id)initWithEmptyArray;
+- (void)loadNewsWithCompletion:(void(^)(BOOL success))completion;
 
 @end
 

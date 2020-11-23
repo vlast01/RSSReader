@@ -14,9 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, retain) UILabel *title;
 @property (nonatomic, retain) UILabel *pubDate;
-@property (nonatomic, assign) FeedItem *feedItem;
+@property (nonatomic, retain) FeedItem *feedItem;
 
 - (void)setupCell;
+- (void)configureWithItem:(FeedItem *)item;
 
 @end
 

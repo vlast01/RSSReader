@@ -17,21 +17,36 @@
 - (void)viewDidLoad {
     self.navigationController.navigationBar.hidden = YES;
     [super viewDidLoad];
+    if (self.feedItemArray == nil) {
+        [self setupFeedItemArray];
+    }
     [self setupPresenter];
-    [self setupTableView];
+    if (self.tableView == nil) {
+        [self setupTableView];
+    }
     [self setupConstraints];
+    [self loadNews];
 }
 
 - (void)setupPresenter {
-    NSMutableArray *feedItemArray = [[NSMutableArray alloc] init];
-    self.feedItemArray = feedItemArray;
-    [feedItemArray release];
     FeedPresenter *presenter = [[FeedPresenter alloc] initWithArray:self.feedItemArray];
     self.presenter = presenter;
     [presenter release];
-    [self.presenter loadNewsWiithCompletion:^(BOOL success) {
+}
+
+- (void)setupFeedItemArray {
+    NSMutableArray *feedItemArray = [NSMutableArray new];
+    self.feedItemArray = feedItemArray;
+    [feedItemArray release];
+}
+
+- (void)loadNews {
+    [self.presenter loadNewsWithCompletion:^(BOOL success) {
         if (success) {
             [self.tableView reloadData];
+        }
+        else {
+            NSLog(@"Loading error");
         }
     }];
 }
@@ -59,7 +74,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FeedCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellId"];
     if (self.feedItemArray.count != 0) {
-        cell.feedItem = self.feedItemArray[indexPath.row];
+        [cell configureWithItem: self.feedItemArray[indexPath.row]];
     }
     [cell setupCell];
     return cell;
@@ -70,7 +85,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100;
+    return self.view.frame.size.height/6;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

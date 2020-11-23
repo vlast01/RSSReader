@@ -11,24 +11,36 @@
 
 @implementation FeedPresenter
 
--(id)initWithArray:(NSMutableArray *)array {
+- (id)initWithArray:(NSMutableArray *)array {
     if (self = [super init]) {
         self.feedItemArray = array;
     }
     return self;
 }
 
-- (void)loadNewsWiithCompletion:(void (^)(BOOL))completion {
+- (void)loadNewsWithCompletion:(void (^)(BOOL))completion {
+    if (self.networkManager == nil) {
+        [self setupNetworkManager];
+    }
+    [self.networkManager loadFeedWithCompliteon:^(NSData * data) {
+        [self parseRowData:data completion:^(BOOL success) {
+            completion(success);
+        }];
+    }];
+}
+
+- (void)parseRowData:(NSData *)data completion:(void (^)(BOOL))completion{
+    RSSParser *parser = [RSSParser new];
+    [parser parseFeedWithData:data andArray:self.feedItemArray completion:^(BOOL success) {
+        completion(success);
+    }];
+    [parser release];
+}
+
+- (void)setupNetworkManager {
     NetworkManager *networkManager = [NetworkManager new];
     self.networkManager = networkManager;
     [networkManager release];
-    [networkManager loadFeedWithCompliteon:^(NSData * data) {
-        RSSParser *parser = [RSSParser new];
-        [parser parseFeedWithData:data andArray:self.feedItemArray completion:^(BOOL success) {
-            completion(success);
-        }];
-        [parser release];
-    }];
 }
 
 - (void)dealloc {

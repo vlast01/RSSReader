@@ -50,16 +50,23 @@
 }
 
 - (NSString *)parseDate:(NSString *)oldDateString {
+    NSDateFormatter *oldFormatter = [self setupOldFormatter];
+    NSDate *oldDate = [oldFormatter dateFromString:oldDateString];
+    NSDateFormatter *newFormatter = [self setupNewFormatter];
+    NSString *newDateString = [newFormatter stringFromDate:oldDate];
+    return newDateString;
+}
+
+- (NSDateFormatter *)setupOldFormatter {
     NSDateFormatter *oldFormatter = [NSDateFormatter new];
     [oldFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss ZZZ"];
-    NSDate *oldDate = [oldFormatter dateFromString:oldDateString];
-    
-    NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    [dateFormatter setDateFormat:@"yyyy/MM/dd"];
-    NSString *newDateString = [dateFormatter stringFromDate:oldDate];
-    [oldFormatter release];
-    [dateFormatter release];
-    return newDateString;
+    return [oldFormatter autorelease];
+}
+
+- (NSDateFormatter *)setupNewFormatter {
+    NSDateFormatter *newFormatter = [NSDateFormatter new];
+    [newFormatter setDateFormat:@"yyyy/MM/dd"];
+    return [newFormatter autorelease];
 }
 
 - (void)dealloc {

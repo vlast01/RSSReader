@@ -9,6 +9,10 @@
 
 @implementation FeedCell
 
+- (void)configureWithItem:(FeedItem *)item {
+    self.feedItem = item;
+}
+
 - (void)setupCell {
     self.backgroundColor = UIColor.whiteColor;
     [self setupTitle];
@@ -17,9 +21,10 @@
 }
 
 - (void)setupTitle {
-    UILabel *title = [[UILabel alloc] init];
+    UILabel *title = [UILabel new];
     self.title = title;
     self.title.translatesAutoresizingMaskIntoConstraints = NO;
+    self.title.numberOfLines = 0;
     [title release];
     [self addSubview:self.title];
     if (self.feedItem.title != nil) {
@@ -28,7 +33,7 @@
 }
 
 - (void)setupPubDate {
-    UILabel *pubDate = [[UILabel alloc] init];
+    UILabel *pubDate = [UILabel new];
     self.pubDate = pubDate;
     self.pubDate.translatesAutoresizingMaskIntoConstraints = NO;
     self.pubDate.font = [UIFont systemFontOfSize:10];
@@ -41,11 +46,11 @@
 
 - (void)setupConstraints {
     [NSLayoutConstraint activateConstraints:@[
-        [self.title.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:10],
-        [self.title.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-10],
+        [self.title.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:self.frame.size.width/30],
+        [self.title.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-self.frame.size.width/30],
         [self.title.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
-        [self.pubDate.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:10],
-        [self.pubDate.topAnchor constraintEqualToAnchor:self.title.bottomAnchor constant:20],
+        [self.pubDate.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-self.frame.size.width/30],
+        [self.pubDate.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-self.frame.size.width/60],
     ]];
 }
 
@@ -58,6 +63,7 @@
 - (void)dealloc {
     [_title release];
     [_pubDate release];
+    [_feedItem release];
     [super dealloc];
 }
 
