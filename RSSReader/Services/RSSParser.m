@@ -7,8 +7,23 @@
 
 #import "RSSParser.h"
 #import "FeedItem.h"
+#import "NSString+DateConverter.h"
 
 @implementation RSSParser
+
+- (instancetype)initPrivate {
+    self = [super init];
+    return self;
+}
+
++ (instancetype)sharedInstance {
+    static RSSParser *uniqueInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        uniqueInstance = [[RSSParser alloc] initPrivate];
+    });
+    return uniqueInstance;
+}
 
 - (void)parseFeedWithData:(NSData *)data andArray:(NSMutableArray<FeedItem *>*)array completion:(void (^)(BOOL))completion{
     NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
@@ -44,29 +59,9 @@
             self.array.lastObject.link = string;
         }
         else if ([self.currentElement isEqualToString:@"pubDate"] && self.array.lastObject.pubDate == nil) {
-            self.array.lastObject.pubDate = [self parseDate:string];
+            self.array.lastObject.pubDate = [string parseDate:string];
         }
     }
-}
-
-- (NSString *)parseDate:(NSString *)oldDateString {
-    NSDateFormatter *oldFormatter = [self setupOldFormatter];
-    NSDate *oldDate = [oldFormatter dateFromString:oldDateString];
-    NSDateFormatter *newFormatter = [self setupNewFormatter];
-    NSString *newDateString = [newFormatter stringFromDate:oldDate];
-    return newDateString;
-}
-
-- (NSDateFormatter *)setupOldFormatter {
-    NSDateFormatter *oldFormatter = [NSDateFormatter new];
-    [oldFormatter setDateFormat:@"EEE, dd MMM yyyy HH:mm:ss ZZZ"];
-    return [oldFormatter autorelease];
-}
-
-- (NSDateFormatter *)setupNewFormatter {
-    NSDateFormatter *newFormatter = [NSDateFormatter new];
-    [newFormatter setDateFormat:@"yyyy/MM/dd"];
-    return [newFormatter autorelease];
 }
 
 - (void)dealloc {

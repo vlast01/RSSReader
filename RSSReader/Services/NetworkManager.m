@@ -8,7 +8,25 @@
 #import "NetworkManager.h"
 #import "FeedItem.h"
 
+@interface NetworkManager ()
+
+@end
+
 @implementation NetworkManager
+
+- (instancetype)initPrivate {
+    self = [super init];
+    return self;
+}
+
++ (instancetype)sharedInstance {
+    static NetworkManager *uniqueInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        uniqueInstance = [[NetworkManager alloc] initPrivate];
+    });
+    return uniqueInstance;
+}
 
 - (void)loadFeedWithCompliteon:(void (^)(NSData*))completion {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://news.tut.by/rss/index.rss"]
@@ -20,7 +38,6 @@
         if (error) {
             NSLog(@"loading error");
         } else {
-            //    NSError *e = nil;
             dispatch_async(dispatch_get_main_queue(), ^{
                 completion(data);
             });

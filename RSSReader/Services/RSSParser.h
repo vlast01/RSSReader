@@ -12,9 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RSSParser : NSObject <NSXMLParserDelegate>
 
-@property (nonatomic, retain)NSMutableArray<FeedItem *>* array;
-@property (nonatomic, retain)NSString *currentElement;
+@property (atomic, retain)NSMutableArray<FeedItem *>* array;
+@property (atomic, retain)NSString *currentElement;
 
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
++ (instancetype)sharedInstance;
 - (void)parseFeedWithData:(NSData *)data andArray:(NSMutableArray<FeedItem *>*)array completion:(void(^)(BOOL success))completion;
 
 @end

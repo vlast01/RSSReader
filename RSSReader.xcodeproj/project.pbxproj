@@ -13,6 +13,7 @@
 		AD6B8A1D2565EB2D0039DB85 /* FeedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = AD6B8A1C2565EB2D0039DB85 /* FeedItem.m */; };
 		AD6B8A2A2565F6EA0039DB85 /* FeedPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = AD6B8A292565F6EA0039DB85 /* FeedPresenter.m */; };
 		AD6B8A2F2566A65E0039DB85 /* RSSParser.m in Sources */ = {isa = PBXBuildFile; fileRef = AD6B8A2E2566A65E0039DB85 /* RSSParser.m */; };
+		AD71CF78256DB26F008526DB /* NSString+DateConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = AD71CF77256DB26F008526DB /* NSString+DateConverter.m */; };
 		D723D95C2562E2FE003DF465 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D723D95B2562E2FE003DF465 /* AppDelegate.m */; };
 		D723D9672562E304003DF465 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D723D9662562E304003DF465 /* Assets.xcassets */; };
 		D723D96A2562E304003DF465 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D723D9682562E304003DF465 /* LaunchScreen.storyboard */; };
@@ -32,6 +33,8 @@
 		AD6B8A292565F6EA0039DB85 /* FeedPresenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FeedPresenter.m; sourceTree = "<group>"; };
 		AD6B8A2D2566A65E0039DB85 /* RSSParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSSParser.h; sourceTree = "<group>"; };
 		AD6B8A2E2566A65E0039DB85 /* RSSParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RSSParser.m; sourceTree = "<group>"; };
+		AD71CF76256DB26F008526DB /* NSString+DateConverter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+DateConverter.h"; sourceTree = "<group>"; };
+		AD71CF77256DB26F008526DB /* NSString+DateConverter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+DateConverter.m"; sourceTree = "<group>"; };
 		D723D9572562E2FE003DF465 /* RSSReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RSSReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D723D95A2562E2FE003DF465 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D723D95B2562E2FE003DF465 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -70,6 +73,8 @@
 				AD6B8A162565E87F0039DB85 /* NetworkManager.m */,
 				AD6B8A2D2566A65E0039DB85 /* RSSParser.h */,
 				AD6B8A2E2566A65E0039DB85 /* RSSParser.m */,
+				AD71CF76256DB26F008526DB /* NSString+DateConverter.h */,
+				AD71CF77256DB26F008526DB /* NSString+DateConverter.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -201,6 +206,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD71CF78256DB26F008526DB /* NSString+DateConverter.m in Sources */,
 				D723D95C2562E2FE003DF465 /* AppDelegate.m in Sources */,
 				AD6B8A0B2565E0100039DB85 /* FeedCell.m in Sources */,
 				AD6B8A0625657CCF0039DB85 /* FeedViewController.m in Sources */,

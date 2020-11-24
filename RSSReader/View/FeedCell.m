@@ -9,6 +9,8 @@
 
 @implementation FeedCell
 
+int const kCellSpacing = 10;
+
 - (void)configureWithItem:(FeedItem *)item {
     self.feedItem = item;
 }
@@ -46,11 +48,11 @@
 
 - (void)setupConstraints {
     [NSLayoutConstraint activateConstraints:@[
-        [self.title.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:self.frame.size.width/30],
-        [self.title.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-self.frame.size.width/30],
+        [self.title.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:kCellSpacing],
+        [self.title.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-kCellSpacing],
         [self.title.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
-        [self.pubDate.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-self.frame.size.width/30],
-        [self.pubDate.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-self.frame.size.width/60],
+        [self.pubDate.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-kCellSpacing],
+        [self.pubDate.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-kCellSpacing],
     ]];
 }
 

@@ -8,6 +8,8 @@
 #import "FeedViewController.h"
 #import "FeedCell.h"
 
+int const kCellHeight = 100;
+
 @interface FeedViewController ()
 
 @end
@@ -17,13 +19,11 @@
 - (void)viewDidLoad {
     self.navigationController.navigationBar.hidden = YES;
     [super viewDidLoad];
-    if (self.feedItemArray == nil) {
+    if (!self.feedItemArray) {
         [self setupFeedItemArray];
     }
     [self setupPresenter];
-    if (self.tableView == nil) {
-        [self setupTableView];
-    }
+    [self setupTableView];
     [self setupConstraints];
     [self loadNews];
 }
@@ -52,14 +52,19 @@
 }
 
 - (void)setupTableView {
-    UITableView *tableView = [[UITableView alloc] init];
-    self.tableView = tableView;
+    self.tableView = [self getTableView];
     self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     [self.tableView registerClass:FeedCell.class forCellReuseIdentifier:@"cellId"];
     [self.view addSubview:self.tableView];
-    [tableView release];
+}
+
+- (UITableView *)getTableView {
+    if (!self.tableView) {
+        return [[UITableView new] autorelease];
+    }
+    else return self.tableView;
 }
 
 - (void)setupConstraints {
@@ -85,7 +90,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return self.view.frame.size.height/6;
+    return kCellHeight;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
