@@ -10,12 +10,15 @@
 
 @interface NetworkManager ()
 
+@property (nonatomic, strong) NSURLSession *session;
+
 @end
 
 @implementation NetworkManager
 
 - (instancetype)initPrivate {
     self = [super init];
+    _session = [NSURLSession sharedSession];
     return self;
 }
 
@@ -28,23 +31,27 @@
     return uniqueInstance;
 }
 
-- (void)loadFeedWithCompliteon:(void (^)(NSData*))completion {
+- (void)loadFeedWithCompliteon:(void (^)(NSData*, NSError*))completion {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://news.tut.by/rss/index.rss"]
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                        timeoutInterval:10.0];
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
+    NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request
                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if (error) {
-            NSLog(@"loading error");
-        } else {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                completion(data);
-            });
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (error) {
+                completion(nil, error);
+            } else {
+                completion(data, nil);
+            }
+        });
     }];
     
     [dataTask resume];
+}
+
+- (void)dealloc {
+    [_session release];
+    [super dealloc];
 }
 
 @end

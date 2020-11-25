@@ -8,6 +8,13 @@
 #import "RSSParser.h"
 #import "FeedItem.h"
 #import "NSString+DateConverter.h"
+#import "NSXMLParser+InitializationWithDelegate.h"
+
+@interface RSSParser ()
+
+@property (nonatomic, copy) void (^completion)(NSError *);
+
+@end
 
 @implementation RSSParser
 
@@ -25,14 +32,13 @@
     return uniqueInstance;
 }
 
-- (void)parseFeedWithData:(NSData *)data andArray:(NSMutableArray<FeedItem *>*)array completion:(void (^)(BOOL))completion{
-    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
+- (void)parseFeedWithData:(NSData *)data andArray:(NSMutableArray<FeedItem *>*)array completion:(void (^)(NSError *))completion{
+    NSXMLParser *parser = [NSXMLParser parserWithData:data andDelegate:self];
     self.array = array;
+    self.completion = completion;
     [array release];
-    parser.delegate = self;
-    BOOL success = [parser parse];
-    [parser release];
-    completion(success);
+    [parser parse];
+    completion(nil);
 }
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary<NSString *,NSString *> *)attributeDict {
@@ -43,7 +49,6 @@
         [self.array addObject:item];
         [item release];
     }
-    
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
@@ -64,7 +69,14 @@
     }
 }
 
+- (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
+    if (self.completion) {
+        self.completion(parseError);
+    }
+}
+
 - (void)dealloc {
+    [_completion release];
     [_currentElement release];
     [_array release];
     [super dealloc];

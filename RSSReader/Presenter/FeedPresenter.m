@@ -9,41 +9,58 @@
 #import "NetworkManager.h"
 #import "RSSParser.h"
 
+@interface FeedPresenter ()
+
+@property (nonatomic, copy) void (^completion)(BOOL);
+@property (nonatomic, retain) NetworkManager *networkManager;
+@property (nonatomic, retain) RSSParser *parser;
+@property (nonatomic, retain) NSMutableArray* feedItemArray;
+
+@end
+
 @implementation FeedPresenter
 
-- (id)initWithArray:(NSMutableArray *)array {
+- (id)initWithArray:(NSMutableArray *)array networkManager:(NetworkManager *)manager parser:(RSSParser *)parser{
     if (self = [super init]) {
         if (array) {
-            self.feedItemArray = array;
+            _feedItemArray = array;
         }
         else {
-            self.feedItemArray = [[NSMutableArray new] autorelease];
+            _feedItemArray = [NSMutableArray array];
         }
+        _networkManager = manager;
+        _parser = parser;
     }
     return self;
 }
 
-- (void)loadNewsWithCompletion:(void (^)(BOOL))completion {
-    self.networkManager = [NetworkManager sharedInstance];
-    [self.networkManager loadFeedWithCompliteon:^(NSData * data) {
-        [self parseRowData:data completion:^(BOOL success) {
-            completion(success);
-        }];
+- (void)loadNewsWithCompletion:(void (^)(NSError *))completion {
+    [self.networkManager loadFeedWithCompliteon:^(NSData * data, NSError *error) {
+        if (error) {
+            completion(error);
+            NSLog(@"%@", error);
+        }
+        else {
+            [self parseRowData:data completion:^(NSError *error) {
+                completion(error);
+            }];
+        }
     }];
 }
 
-- (void)parseRowData:(NSData *)data completion:(void (^)(BOOL))completion{
-    RSSParser *parser = [RSSParser sharedInstance];
-    [parser parseFeedWithData:data andArray:self.feedItemArray completion:^(BOOL success) {
-        completion(success);
+- (void)parseRowData:(NSData *)data completion:(void (^)(NSError *))completion{
+    [self.parser parseFeedWithData:data andArray:self.feedItemArray completion:^(NSError *error) {
+        completion(error);
     }];
-    [parser release];
 }
 
 
 - (void)dealloc {
     [_networkManager release];
     [_feedItemArray release];
+    [_completion release];
+    [_networkManager release];
+    [_parser release];
     [super dealloc];
 }
 @end

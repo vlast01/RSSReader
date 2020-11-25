@@ -7,17 +7,15 @@
 
 #import <Foundation/Foundation.h>
 #import "NetworkManager.h"
-#include "FeedItem.h"
+#import "FeedItem.h"
+#import "RSSParser.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FeedPresenter : NSObject
 
-@property (nonatomic, retain) NetworkManager *networkManager;
-@property (nonatomic, retain) NSMutableArray* feedItemArray;
-
-- (id)initWithArray:(NSMutableArray<FeedItem*>*)array;
-- (void)loadNewsWithCompletion:(void(^)(BOOL success))completion;
+- (id)initWithArray:(NSMutableArray<FeedItem*>*)array networkManager:(NetworkManager *)manager parser:(RSSParser *)parser;
+- (void)loadNewsWithCompletion:(void(^)(NSError *error))completion;
 
 @end
 

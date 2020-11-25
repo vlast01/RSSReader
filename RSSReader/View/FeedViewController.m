@@ -23,13 +23,13 @@ int const kCellHeight = 100;
         [self setupFeedItemArray];
     }
     [self setupPresenter];
-    [self setupTableView];
+    [self tableView];
     [self setupConstraints];
     [self loadNews];
 }
 
 - (void)setupPresenter {
-    FeedPresenter *presenter = [[FeedPresenter alloc] initWithArray:self.feedItemArray];
+    FeedPresenter *presenter = [[FeedPresenter alloc] initWithArray:self.feedItemArray networkManager:[NetworkManager sharedInstance] parser:[RSSParser sharedInstance]];
     self.presenter = presenter;
     [presenter release];
 }
@@ -41,30 +41,33 @@ int const kCellHeight = 100;
 }
 
 - (void)loadNews {
-    [self.presenter loadNewsWithCompletion:^(BOOL success) {
-        if (success) {
+    [self.presenter loadNewsWithCompletion:^(NSError *error) {
+        if (!error) {
             [self.tableView reloadData];
         }
         else {
-            NSLog(@"Loading error");
+            [self showError:error];
         }
     }];
 }
 
-- (void)setupTableView {
-    self.tableView = [self getTableView];
-    self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-    [self.tableView registerClass:FeedCell.class forCellReuseIdentifier:@"cellId"];
-    [self.view addSubview:self.tableView];
+- (void)showError:(NSError *)error {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                   message:[NSString stringWithFormat:@"%@", error.localizedDescription]
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
-- (UITableView *)getTableView {
-    if (!self.tableView) {
-        return [[UITableView new] autorelease];
+- (UITableView *)tableView {
+    if (!_tableView) {
+        _tableView = [UITableView new];
+        _tableView.translatesAutoresizingMaskIntoConstraints = NO;
+        _tableView.dataSource = self;
+        _tableView.delegate = self;
+        [_tableView registerClass:FeedCell.class forCellReuseIdentifier:@"cellId"];
+        [self.view addSubview:_tableView];
     }
-    else return self.tableView;
+    return _tableView;
 }
 
 - (void)setupConstraints {

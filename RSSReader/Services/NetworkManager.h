@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 + (instancetype)sharedInstance;
-- (void)loadFeedWithCompliteon:(void (^)(NSData*))completion;
+- (void)loadFeedWithCompliteon:(void (^)(NSData*, NSError*))completion;
 
 @end
 
