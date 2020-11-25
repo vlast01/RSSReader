@@ -51,6 +51,7 @@ int const kCellSpacing = 10;
         [self.title.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:kCellSpacing],
         [self.title.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-kCellSpacing],
         [self.title.centerYAnchor constraintEqualToAnchor:self.centerYAnchor],
+        [self.title.heightAnchor constraintEqualToConstant:50],
         [self.pubDate.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-kCellSpacing],
         [self.pubDate.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-kCellSpacing],
     ]];

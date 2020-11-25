@@ -26,7 +26,7 @@
             _feedItemArray = array;
         }
         else {
-            _feedItemArray = [NSMutableArray array];
+            _feedItemArray = [NSMutableArray new];
         }
         _networkManager = manager;
         _parser = parser;

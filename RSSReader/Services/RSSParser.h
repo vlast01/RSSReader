@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 + (instancetype)sharedInstance;
-- (void)parseFeedWithData:(NSData *)data andArray:(NSMutableArray<FeedItem *>*)array completion:(void(^)(NSError *error))completion;
+- (void)parseFeedWithData:(NSData *)data andArray:(NSMutableArray<FeedItem *>*)array completion:(void(^)(NSError* _Nullable error))completion;
 
 @end
 

@@ -19,25 +19,9 @@ int const kCellHeight = 100;
 - (void)viewDidLoad {
     self.navigationController.navigationBar.hidden = YES;
     [super viewDidLoad];
-    if (!self.feedItemArray) {
-        [self setupFeedItemArray];
-    }
-    [self setupPresenter];
     [self tableView];
     [self setupConstraints];
     [self loadNews];
-}
-
-- (void)setupPresenter {
-    FeedPresenter *presenter = [[FeedPresenter alloc] initWithArray:self.feedItemArray networkManager:[NetworkManager sharedInstance] parser:[RSSParser sharedInstance]];
-    self.presenter = presenter;
-    [presenter release];
-}
-
-- (void)setupFeedItemArray {
-    NSMutableArray *feedItemArray = [NSMutableArray new];
-    self.feedItemArray = feedItemArray;
-    [feedItemArray release];
 }
 
 - (void)loadNews {
