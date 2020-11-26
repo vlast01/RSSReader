@@ -11,7 +11,6 @@
 
 @interface FeedPresenter ()
 
-@property (nonatomic, copy) void (^completion)(BOOL);
 @property (nonatomic, retain) NetworkManager *networkManager;
 @property (nonatomic, retain) RSSParser *parser;
 @property (nonatomic, retain) NSMutableArray* feedItemArray;
@@ -38,12 +37,9 @@
     [self.networkManager loadFeedWithCompliteon:^(NSData * data, NSError *error) {
         if (error) {
             completion(error);
-            NSLog(@"%@", error);
         }
         else {
-            [self parseRowData:data completion:^(NSError *error) {
-                completion(error);
-            }];
+            [self parseRowData:data completion:completion];
         }
     }];
 }
@@ -58,7 +54,6 @@
 - (void)dealloc {
     [_networkManager release];
     [_feedItemArray release];
-    [_completion release];
     [_networkManager release];
     [_parser release];
     [super dealloc];

@@ -45,9 +45,7 @@
     
     self.currentElement = elementName;
     if([elementName isEqualToString:@"item"]) {
-        FeedItem *item = [FeedItem new];
-        [self.array addObject:item];
-        [item release];
+        [self.array addObject:[[FeedItem new] autorelease]];
     }
 }
 
