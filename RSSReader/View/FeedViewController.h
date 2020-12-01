@@ -6,16 +6,14 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FeedPresenter.h"
-#import "FeedItem.h"
+
+@class FeedPresenter;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface FeedViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface FeedViewController : UIViewController
 
-@property (nonatomic, retain) UITableView* tableView;
-@property (nonatomic, retain) FeedPresenter* presenter;
-@property (nonatomic, retain) NSMutableArray<FeedItem*>* feedItemArray;
+- (id)initWithFeedItemArray:(NSMutableArray *)feedItemArray andPresenter:(FeedPresenter *)presenter;
 
 @end
 

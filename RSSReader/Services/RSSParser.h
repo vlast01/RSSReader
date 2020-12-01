@@ -6,14 +6,12 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "FeedItem.h"
+
+@class FeedItem;
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RSSParser : NSObject <NSXMLParserDelegate>
-
-@property (atomic, retain)NSMutableArray<FeedItem *>* array;
-@property (atomic, retain)NSString *currentElement;
+@interface RSSParser : NSObject 
 
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 + (instancetype)sharedInstance;

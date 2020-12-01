@@ -9,6 +9,7 @@
 #import "FeedViewController.h"
 #import "FeedPresenter.h"
 #import "NetworkManager.h"
+#import "RSSParser.h"
 
 @interface AppDelegate ()
 
@@ -23,10 +24,8 @@
     self.window = window;
     UINavigationController *navController = [UINavigationController new];
     NSMutableArray *feedItemArray = [NSMutableArray new];
-    FeedViewController *feed = [FeedViewController new];
-    feed.feedItemArray = feedItemArray;
     FeedPresenter *presenter = [[FeedPresenter alloc] initWithArray:feedItemArray networkManager:[NetworkManager sharedInstance] parser:[RSSParser sharedInstance]];
-    feed.presenter = presenter;
+    FeedViewController *feed = [[FeedViewController alloc] initWithFeedItemArray:feedItemArray andPresenter:presenter];
     [presenter release];
     [navController pushViewController:feed animated:false];
     [self.window makeKeyAndVisible];

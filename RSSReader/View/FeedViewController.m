@@ -7,14 +7,27 @@
 
 #import "FeedViewController.h"
 #import "FeedCell.h"
+#import "FeedPresenter.h"
+#import "FeedItem.h"
 
-int const kCellHeight = 100;
+@interface FeedViewController () <UITableViewDataSource, UITableViewDelegate>
 
-@interface FeedViewController ()
+@property (nonatomic, retain) UITableView* tableView;
+@property (nonatomic, retain) FeedPresenter* presenter;
+@property (nonatomic, retain) NSMutableArray<FeedItem*>* feedItemArray;
 
 @end
 
 @implementation FeedViewController
+
+- (id)initWithFeedItemArray:(NSMutableArray *)feedItemArray andPresenter:(FeedPresenter *)presenter{
+    self = [super init];
+    if (self) {
+        self.feedItemArray = feedItemArray;
+        self.presenter = presenter;
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     self.navigationController.navigationBar.hidden = YES;
@@ -77,7 +90,7 @@ int const kCellHeight = 100;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return kCellHeight;
+    return UITableViewAutomaticDimension;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

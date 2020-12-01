@@ -6,15 +6,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FeedItem.h"
+
+@class FeedItem;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FeedCell : UITableViewCell
 
-@property (nonatomic, retain) UILabel *title;
-@property (nonatomic, retain) UILabel *pubDate;
-@property (nonatomic, retain) FeedItem *feedItem;
+@property (nonatomic, retain, readonly) UILabel *title;
+@property (nonatomic, retain, readonly) UILabel *pubDate;
 
 - (void)setupCell;
 - (void)configureWithItem:(FeedItem *)item;

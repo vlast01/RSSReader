@@ -7,6 +7,7 @@
 
 #import "FeedPresenter.h"
 #import "NetworkManager.h"
+#import "FeedItem.h"
 #import "RSSParser.h"
 
 @interface FeedPresenter ()

@@ -6,16 +6,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NetworkManager.h"
-#import "FeedItem.h"
-#import "RSSParser.h"
+
+@class NetworkManager;
+@class FeedItem;
+@class RSSParser;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FeedPresenter : NSObject
 
 - (id)initWithArray:(NSMutableArray<FeedItem*>*)array networkManager:(NetworkManager *)manager parser:(RSSParser *)parser;
-//- (id)initWithNetworkManager:(NetworkManager *)manager parser:(RSSParser *)parser;
 - (void)loadNewsWithCompletion:(void(^)( NSError * _Nullable error))completion;
 
 @end

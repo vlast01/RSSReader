@@ -10,11 +10,19 @@
 #import "NSString+DateConverter.h"
 #import "NSXMLParser+InitializationWithDelegate.h"
 
-@interface RSSParser ()
+@interface RSSParser () <NSXMLParserDelegate>
 
 @property (nonatomic, copy) void (^completion)(NSError *);
+@property (nonatomic, retain)NSMutableArray<FeedItem *>* array;
+@property (nonatomic, retain)NSString *currentElement;
 
 @end
+
+NSString *kItem = @"item";
+NSString *kTitle = @"title";
+NSString *kDescription = @"description";
+NSString *kLink = @"link";
+NSString *kPubDate = @"pubDate";
 
 @implementation RSSParser
 
@@ -44,7 +52,7 @@
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary<NSString *,NSString *> *)attributeDict {
     
     self.currentElement = elementName;
-    if([elementName isEqualToString:@"item"]) {
+    if([elementName isEqualToString:kItem]) {
         [self.array addObject:[[FeedItem new] autorelease]];
     }
 }
@@ -52,16 +60,16 @@
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
     
     if (self.array.count != 0) {
-        if ([self.currentElement isEqualToString:@"title"] && self.array.lastObject.title == nil) {
+        if ([self.currentElement isEqualToString:kTitle] && !self.array.lastObject.title) {
             self.array.lastObject.title = string;
         }
-        else if ([self.currentElement isEqualToString:@"description"] && self.array.lastObject.newsDescription == nil) {
+        else if ([self.currentElement isEqualToString:kDescription] && !self.array.lastObject.newsDescription) {
             self.array.lastObject.newsDescription = string;
         }
-        else if ([self.currentElement isEqualToString:@"link"] && self.array.lastObject.link == nil) {
+        else if ([self.currentElement isEqualToString:kLink] && !self.array.lastObject.link) {
             self.array.lastObject.link = string;
         }
-        else if ([self.currentElement isEqualToString:@"pubDate"] && self.array.lastObject.pubDate == nil) {
+        else if ([self.currentElement isEqualToString:kPubDate] && !self.array.lastObject.pubDate) {
             self.array.lastObject.pubDate = [string parseDate:string];
         }
     }
