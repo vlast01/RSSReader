@@ -24,12 +24,15 @@
     if (self = [super init]) {
         if (array) {
             _feedItemArray = array;
+            [_feedItemArray retain];
         }
         else {
             _feedItemArray = [NSMutableArray new];
         }
         _networkManager = manager;
+        [_networkManager retain];
         _parser = parser;
+        [_parser retain];
     }
     return self;
 }
@@ -51,11 +54,9 @@
     }];
 }
 
-
 - (void)dealloc {
     [_networkManager release];
     [_feedItemArray release];
-    [_networkManager release];
     [_parser release];
     [super dealloc];
 }

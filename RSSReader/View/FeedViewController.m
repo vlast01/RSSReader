@@ -23,8 +23,10 @@
 - (id)initWithFeedItemArray:(NSMutableArray *)feedItemArray andPresenter:(FeedPresenter *)presenter{
     self = [super init];
     if (self) {
-        self.feedItemArray = feedItemArray;
-        self.presenter = presenter;
+        _feedItemArray = feedItemArray;
+        [_feedItemArray retain];
+        _presenter = presenter;
+        [_presenter retain];
     }
     return self;
 }
@@ -32,9 +34,19 @@
 - (void)viewDidLoad {
     self.navigationController.navigationBar.hidden = YES;
     [super viewDidLoad];
-    [self tableView];
-    [self setupConstraints];
+    [self setupLayout];
     [self loadNews];
+}
+
+- (void)setupLayout {
+    [self.view addSubview:self.tableView];
+    
+    [NSLayoutConstraint activateConstraints:@[
+        [self.tableView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+        [self.tableView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+        [self.tableView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+        [self.tableView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+    ]];
 }
 
 - (void)loadNews {
@@ -62,24 +74,15 @@
         _tableView.dataSource = self;
         _tableView.delegate = self;
         [_tableView registerClass:FeedCell.class forCellReuseIdentifier:@"cellId"];
-        [self.view addSubview:_tableView];
     }
     return _tableView;
 }
 
-- (void)setupConstraints {
-    [NSLayoutConstraint activateConstraints:@[
-        [self.tableView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
-        [self.tableView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
-        [self.tableView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
-        [self.tableView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
-    ]];
-}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FeedCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellId"];
     if (self.feedItemArray.count != 0) {
-        [cell configureWithItem: self.feedItemArray[indexPath.row]];
+        [cell setItem: self.feedItemArray[indexPath.row]];
     }
     [cell setupCell];
     return cell;
@@ -94,6 +97,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [[UIApplication sharedApplication] openURL:[[[NSURL alloc] initWithString:self.feedItemArray[indexPath.row].link] autorelease]];
 }
 

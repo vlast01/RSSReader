@@ -13,7 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NetworkManager : NSObject
 
-- (instancetype)init UNAVAILABLE_ATTRIBUTE;
 + (instancetype)sharedInstance;
 - (void)loadFeedWithCompliteon:(void (^)(NSData* _Nullable, NSError* _Nullable))completion;
 

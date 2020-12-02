@@ -10,15 +10,20 @@
 
 @interface NetworkManager ()
 
-@property (nonatomic, strong) NSURLSession *session;
+@property (nonatomic, retain) NSURLSession *session;
 
 @end
 
+NSString *url = @"http://news.tut.by/rss/index.rss";
+
 @implementation NetworkManager
 
-- (instancetype)initPrivate {
+- (instancetype)init {
     self = [super init];
-    _session = [NSURLSession sharedSession];
+    if (self) {
+        _session = [NSURLSession sharedSession];
+        [_session retain];
+    }
     return self;
 }
 
@@ -26,13 +31,13 @@
     static NetworkManager *uniqueInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        uniqueInstance = [[NetworkManager alloc] initPrivate];
+        uniqueInstance = [[NetworkManager alloc] init];
     });
     return uniqueInstance;
 }
 
 - (void)loadFeedWithCompliteon:(void (^)(NSData*, NSError*))completion {
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"http://news.tut.by/rss/index.rss"]
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                        timeoutInterval:10.0];
     NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request

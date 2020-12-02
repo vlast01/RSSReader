@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, retain, readonly) UILabel *pubDate;
 
 - (void)setupCell;
-- (void)configureWithItem:(FeedItem *)item;
+- (void)setItem:(FeedItem *)item;
 
 @end
 

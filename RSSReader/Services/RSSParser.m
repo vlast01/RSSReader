@@ -26,16 +26,11 @@ NSString *kPubDate = @"pubDate";
 
 @implementation RSSParser
 
-- (instancetype)initPrivate {
-    self = [super init];
-    return self;
-}
-
 + (instancetype)sharedInstance {
     static RSSParser *uniqueInstance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        uniqueInstance = [[RSSParser alloc] initPrivate];
+        uniqueInstance = [[RSSParser alloc] init];
     });
     return uniqueInstance;
 }
