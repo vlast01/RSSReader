@@ -6,10 +6,9 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@class NetworkManager;
-@class FeedItem;
-@class RSSParser;
+#import "NetworkManager.h"
+#import "FeedItem.h"
+#import "RSSParser.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

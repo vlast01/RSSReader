@@ -7,7 +7,6 @@
 
 #import "FeedViewController.h"
 #import "FeedCell.h"
-#import "FeedPresenter.h"
 #import "FeedItem.h"
 
 @interface FeedViewController () <UITableViewDataSource, UITableViewDelegate>

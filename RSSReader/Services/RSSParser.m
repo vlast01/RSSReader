@@ -6,7 +6,6 @@
 //
 
 #import "RSSParser.h"
-#import "FeedItem.h"
 #import "NSString+DateConverter.h"
 #import "NSXMLParser+InitializationWithDelegate.h"
 

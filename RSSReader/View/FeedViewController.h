@@ -6,8 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@class FeedPresenter;
+#import "FeedPresenter.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

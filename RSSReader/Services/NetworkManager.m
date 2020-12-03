@@ -6,7 +6,6 @@
 //
 
 #import "NetworkManager.h"
-#import "FeedItem.h"
 
 @interface NetworkManager ()
 

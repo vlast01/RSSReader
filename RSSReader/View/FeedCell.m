@@ -6,7 +6,6 @@
 //
 
 #import "FeedCell.h"
-#import "FeedItem.h"
 
 @interface FeedCell ()
 
