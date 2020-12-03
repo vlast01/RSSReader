@@ -11,7 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSString (DateConverter)
 
-- (NSString *)parseDate:(NSString *)date;
+- (NSString *)changeDate:(NSString *)date fromFormat:(NSString *)initialFormat toFormat:(NSString *)desiredFormat;
 
 @end
 

@@ -10,13 +10,12 @@
 
 @implementation NSString (DateConverter)
 
-- (NSString *)parseDate:(NSString *)date {
-    NSString *oldDateString = [[NSString alloc] initWithFormat:@"%@", date];
-    NSDateFormatter *oldFormatter = [NSDateFormatter formatterWithFormat:@"EEE, dd MMM yyyy HH:mm:ss ZZZ"];
+- (NSString *)changeDate:(NSString *)date fromFormat:(NSString *)initialFormat toFormat:(NSString *)desiredFormat {
+    NSString *oldDateString = [NSString stringWithFormat:@"%@", date];
+    NSDateFormatter *oldFormatter = [NSDateFormatter formatterWithFormat:initialFormat];
     NSDate *oldDate = [oldFormatter dateFromString:oldDateString];
-    NSDateFormatter *newFormatter = [NSDateFormatter formatterWithFormat:@"yyyy/MM/dd"];
+    NSDateFormatter *newFormatter = [NSDateFormatter formatterWithFormat:desiredFormat];
     NSString *newDateString = [newFormatter stringFromDate:oldDate];
-    [oldDateString release];
     return newDateString;
 }
 

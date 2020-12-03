@@ -18,11 +18,13 @@
 
 @end
 
-NSString *kItem = @"item";
-NSString *kTitle = @"title";
-NSString *kDescription = @"description";
-NSString *kLink = @"link";
-NSString *kPubDate = @"pubDate";
+NSString * const kItem = @"item";
+NSString * const kTitle = @"title";
+NSString * const kDescription = @"description";
+NSString * const kLink = @"link";
+NSString * const kPubDate = @"pubDate";
+NSString * const kInitialFormat = @"EEE, dd MMM yyyy HH:mm:ss ZZZ";
+NSString * const kDesiredFormat = @"yyyy/MM/dd";
 
 @implementation RSSParser
 
@@ -65,7 +67,7 @@ NSString *kPubDate = @"pubDate";
             self.array.lastObject.link = string;
         }
         else if ([self.currentElement isEqualToString:kPubDate] && !self.array.lastObject.pubDate) {
-            self.array.lastObject.pubDate = [string parseDate:string];
+            self.array.lastObject.pubDate = [string changeDate:string fromFormat:kInitialFormat toFormat:kDesiredFormat];
         }
     }
 }

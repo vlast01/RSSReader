@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NetworkManager : NSObject
 
 + (instancetype)sharedInstance;
-- (void)loadFeedWithCompliteon:(void (^)(NSData* _Nullable, NSError* _Nullable))completion;
+- (void)loadFeedWithCompletion:(void (^)(NSData* _Nullable, NSError* _Nullable))completion;
 
 @end
 

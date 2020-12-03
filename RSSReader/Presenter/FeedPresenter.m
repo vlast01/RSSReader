@@ -29,16 +29,14 @@
         else {
             _feedItemArray = [NSMutableArray new];
         }
-        _networkManager = manager;
-        [_networkManager retain];
-        _parser = parser;
-        [_parser retain];
+        _networkManager = [manager retain];
+        _parser = [parser retain];
     }
     return self;
 }
 
 - (void)loadNewsWithCompletion:(void (^)(NSError *))completion {
-    [self.networkManager loadFeedWithCompliteon:^(NSData * data, NSError *error) {
+    [self.networkManager loadFeedWithCompletion:^(NSData * data, NSError *error) {
         if (error) {
             completion(error);
         }

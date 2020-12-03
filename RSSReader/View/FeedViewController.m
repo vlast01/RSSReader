@@ -23,10 +23,8 @@
 - (id)initWithFeedItemArray:(NSMutableArray *)feedItemArray andPresenter:(FeedPresenter *)presenter{
     self = [super init];
     if (self) {
-        _feedItemArray = feedItemArray;
-        [_feedItemArray retain];
-        _presenter = presenter;
-        [_presenter retain];
+        _feedItemArray = [feedItemArray retain];
+        _presenter = [presenter retain];
     }
     return self;
 }
@@ -62,7 +60,7 @@
 
 - (void)showError:(NSError *)error {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
-                                                                   message:[NSString stringWithFormat:@"%@", error.localizedDescription]
+                                                                   message:error.localizedDescription
                                                             preferredStyle:UIAlertControllerStyleAlert];
     [self presentViewController:alert animated:YES completion:nil];
 }

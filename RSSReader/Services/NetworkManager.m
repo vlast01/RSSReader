@@ -14,7 +14,7 @@
 
 @end
 
-NSString *url = @"http://news.tut.by/rss/index.rss";
+NSString * const url = @"http://news.tut.by/rss/index.rss";
 
 @implementation NetworkManager
 
@@ -36,7 +36,7 @@ NSString *url = @"http://news.tut.by/rss/index.rss";
     return uniqueInstance;
 }
 
-- (void)loadFeedWithCompliteon:(void (^)(NSData*, NSError*))completion {
+- (void)loadFeedWithCompletion:(void (^)(NSData*, NSError*))completion {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                        timeoutInterval:10.0];
