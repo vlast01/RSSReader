@@ -15,7 +15,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FeedPresenter : NSObject
 
 - (id)initWithArray:(NSMutableArray<FeedItem*>*)array networkManager:(NetworkManager *)manager parser:(RSSParser *)parser;
-- (void)loadNews;
 - (void)asyncLoadNewsWithCompletion:(void (^)(NSError * _Nullable error))completion;
 
 @end
