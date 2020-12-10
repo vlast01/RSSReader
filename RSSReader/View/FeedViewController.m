@@ -47,7 +47,10 @@
 }
 
 - (void)loadNews {
-    [self.presenter loadNewsWithCompletion:^(NSError *error) {
+    UIApplication* app = [UIApplication sharedApplication];
+    app.networkActivityIndicatorVisible = YES;
+    [self.presenter asyncLoadNewsWithCompletion:^(NSError *error) {
+        app.networkActivityIndicatorVisible = NO;
         if (!error) {
             [self.tableView reloadData];
         }

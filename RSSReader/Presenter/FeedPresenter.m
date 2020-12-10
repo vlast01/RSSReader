@@ -12,6 +12,7 @@
 @property (nonatomic, retain) NetworkManager *networkManager;
 @property (nonatomic, retain) RSSParser *parser;
 @property (nonatomic, retain) NSMutableArray* feedItemArray;
+@property (nonatomic, copy) void (^completion)(NSError *);
 
 @end
 
@@ -31,13 +32,18 @@
     return self;
 }
 
-- (void)loadNewsWithCompletion:(void (^)(NSError *))completion {
+- (void)asyncLoadNewsWithCompletion:(void (^)(NSError *))completion {
+    self.completion = completion;
+    [NSThread detachNewThreadSelector:@selector(loadNews) toTarget:self withObject:nil];
+}
+
+- (void)loadNews {
     [self.networkManager loadFeedWithCompletion:^(NSData * data, NSError *error) {
         if (error) {
-            completion(error);
+            self.completion(error);
         }
         else {
-            [self parseRowData:data completion:completion];
+            [self parseRowData:data completion:self.completion];
         }
     }];
 }
@@ -52,6 +58,7 @@
     [_networkManager release];
     [_feedItemArray release];
     [_parser release];
+    [_completion release];
     [super dealloc];
 }
 @end
