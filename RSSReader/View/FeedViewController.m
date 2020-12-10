@@ -19,7 +19,7 @@
 
 @implementation FeedViewController
 
-- (id)initWithFeedItemArray:(NSMutableArray *)feedItemArray andPresenter:(FeedPresenter *)presenter{
+- (id)initWithFeedItemArray:(NSMutableArray *)feedItemArray presenter:(FeedPresenter *)presenter{
     self = [super init];
     if (self) {
         _feedItemArray = [feedItemArray retain];

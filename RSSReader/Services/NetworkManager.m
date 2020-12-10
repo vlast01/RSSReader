@@ -21,7 +21,6 @@ NSString * const url = @"http://news.tut.by/rss/index.rss";
     self = [super init];
     if (self) {
         _session = [NSURLSession sharedSession];
-        [_session retain];
     }
     return self;
 }

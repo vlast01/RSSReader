@@ -27,17 +27,8 @@ NSString * const kDesiredFormat = @"yyyy/MM/dd";
 
 @implementation RSSParser
 
-+ (instancetype)sharedInstance {
-    static RSSParser *uniqueInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        uniqueInstance = [[RSSParser alloc] init];
-    });
-    return uniqueInstance;
-}
-
-- (void)parseFeedWithData:(NSData *)data andArray:(NSMutableArray<FeedItem *>*)array completion:(void (^)(NSError *))completion{
-    NSXMLParser *parser = [NSXMLParser parserWithData:data andDelegate:self];
+- (void)parseFeedWithData:(NSData *)data array:(NSMutableArray<FeedItem *>*)array completion:(void (^)(NSError *))completion{
+    NSXMLParser *parser = [NSXMLParser parserWithData:data delegate:self];
     self.array = array;
     self.completion = completion;
     [array release];

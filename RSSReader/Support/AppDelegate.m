@@ -24,8 +24,10 @@
     self.window = window;
     UINavigationController *navController = [UINavigationController new];
     NSMutableArray *feedItemArray = [NSMutableArray new];
-    FeedPresenter *presenter = [[FeedPresenter alloc] initWithArray:feedItemArray networkManager:[NetworkManager sharedInstance] parser:[RSSParser sharedInstance]];
-    FeedViewController *feed = [[FeedViewController alloc] initWithFeedItemArray:feedItemArray andPresenter:presenter];
+    RSSParser *parser = [[RSSParser alloc] init];
+    FeedPresenter *presenter = [[FeedPresenter alloc] initWithArray:feedItemArray networkManager:[NetworkManager sharedInstance] parser:parser];
+    [parser release];
+    FeedViewController *feed = [[FeedViewController alloc] initWithFeedItemArray:feedItemArray presenter:presenter];
     [presenter release];
     [navController pushViewController:feed animated:false];
     [self.window makeKeyAndVisible];

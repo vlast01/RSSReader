@@ -20,8 +20,7 @@
 - (id)initWithArray:(NSMutableArray *)array networkManager:(NetworkManager *)manager parser:(RSSParser *)parser{
     if (self = [super init]) {
         if (array) {
-            _feedItemArray = array;
-            [_feedItemArray retain];
+            _feedItemArray = [array retain];
         }
         else {
             _feedItemArray = [NSMutableArray new];
@@ -44,7 +43,7 @@
 }
 
 - (void)parseRowData:(NSData *)data completion:(void (^)(NSError *))completion{
-    [self.parser parseFeedWithData:data andArray:self.feedItemArray completion:^(NSError *error) {
+    [self.parser parseFeedWithData:data array:self.feedItemArray completion:^(NSError *error) {
         completion(error);
     }];
 }

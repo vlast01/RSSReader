@@ -12,8 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RSSParser : NSObject 
 
-+ (instancetype)sharedInstance;
-- (void)parseFeedWithData:(NSData *)data andArray:(NSMutableArray<FeedItem *>*)array completion:(void(^)(NSError* _Nullable error))completion;
+- (void)parseFeedWithData:(NSData *)data array:(NSMutableArray<FeedItem *>*)array completion:(void(^)(NSError* _Nullable error))completion;
 
 @end
 

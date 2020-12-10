@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FeedViewController : UIViewController
 
-- (id)initWithFeedItemArray:(NSMutableArray *)feedItemArray andPresenter:(FeedPresenter *)presenter;
+- (id)initWithFeedItemArray:(NSMutableArray *)feedItemArray presenter:(FeedPresenter *)presenter;
 
 @end
 
