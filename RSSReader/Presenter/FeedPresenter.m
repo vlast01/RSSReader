@@ -38,14 +38,16 @@
 }
 
 - (void)loadNews {
-    [self.networkManager loadFeedWithCompletion:^(NSData * data, NSError *error) {
-        if (error) {
-            self.completion(error);
-        }
-        else {
-            [self parseRowData:data completion:self.completion];
-        }
-    }];
+    @autoreleasepool {
+        [self.networkManager loadFeedWithCompletion:^(NSData * data, NSError *error) {
+            if (error) {
+                self.completion(error);
+            }
+            else {
+                [self parseRowData:data completion:self.completion];
+            }
+        }];
+    }
 }
 
 - (void)parseRowData:(NSData *)data completion:(void (^)(NSError *))completion{
