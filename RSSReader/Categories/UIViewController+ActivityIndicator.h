@@ -11,8 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface UIViewController (ActivityIndicator)
 
-- (void)showActivitiIndicator;
-- (void)hideActivitiIndicator;
+- (void)showActivityIndicator;
+- (void)hideActivityIndicator;
 
 @end
 

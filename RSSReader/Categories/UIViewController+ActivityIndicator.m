@@ -9,12 +9,12 @@
 
 @implementation UIViewController (ActivityIndicator)
 
-- (void)showActivitiIndicator {
+- (void)showActivityIndicator {
     UIApplication *app = [UIApplication sharedApplication];
     app.networkActivityIndicatorVisible = YES;
 }
 
-- (void)hideActivitiIndicator {
+- (void)hideActivityIndicator {
     UIApplication *app = [UIApplication sharedApplication];
     app.networkActivityIndicatorVisible = NO;
 }

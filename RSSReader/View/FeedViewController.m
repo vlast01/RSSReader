@@ -48,9 +48,9 @@
 }
 
 - (void)loadNews {
-    [self showActivitiIndicator];
+    [self showActivityIndicator];
     [self.presenter asyncLoadNewsWithCompletion:^(NSError *error) {
-        [self hideActivitiIndicator];
+        [self hideActivityIndicator];
         if (!error) {
             [self.tableView reloadData];
         }
