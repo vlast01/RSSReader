@@ -8,6 +8,7 @@
 #import "FeedViewController.h"
 #import "FeedCell.h"
 #import "FeedItem.h"
+#import "UIViewController+ActivityIndicator.h"
 
 @interface FeedViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -47,10 +48,9 @@
 }
 
 - (void)loadNews {
-    UIApplication* app = [UIApplication sharedApplication];
-    app.networkActivityIndicatorVisible = YES;
+    [self showActivitiIndicator];
     [self.presenter asyncLoadNewsWithCompletion:^(NSError *error) {
-        app.networkActivityIndicatorVisible = NO;
+        [self hideActivitiIndicator];
         if (!error) {
             [self.tableView reloadData];
         }

@@ -20,6 +20,7 @@
 		D723D9672562E304003DF465 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D723D9662562E304003DF465 /* Assets.xcassets */; };
 		D723D96A2562E304003DF465 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D723D9682562E304003DF465 /* LaunchScreen.storyboard */; };
 		D723D96D2562E304003DF465 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D723D96C2562E304003DF465 /* main.m */; };
+		FBEF823825AF273C00CA5C20 /* UIViewController+ActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = FBEF823725AF273C00CA5C20 /* UIViewController+ActivityIndicator.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,8 @@
 		D723D9692562E304003DF465 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D723D96B2562E304003DF465 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D723D96C2562E304003DF465 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FBEF823625AF273C00CA5C20 /* UIViewController+ActivityIndicator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ActivityIndicator.h"; sourceTree = "<group>"; };
+		FBEF823725AF273C00CA5C20 /* UIViewController+ActivityIndicator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ActivityIndicator.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +113,8 @@
 				AD71CF7C256EA093008526DB /* NSXMLParser+InitializationWithDelegate.m */,
 				AD71CF7F256EA28F008526DB /* NSDateFormatter+InitializingWithFormat.h */,
 				AD71CF80256EA28F008526DB /* NSDateFormatter+InitializingWithFormat.m */,
+				FBEF823625AF273C00CA5C20 /* UIViewController+ActivityIndicator.h */,
+				FBEF823725AF273C00CA5C20 /* UIViewController+ActivityIndicator.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -229,6 +234,7 @@
 				D723D95C2562E2FE003DF465 /* AppDelegate.m in Sources */,
 				AD6B8A0B2565E0100039DB85 /* FeedCell.m in Sources */,
 				AD6B8A0625657CCF0039DB85 /* FeedViewController.m in Sources */,
+				FBEF823825AF273C00CA5C20 /* UIViewController+ActivityIndicator.m in Sources */,
 				AD6B8A2F2566A65E0039DB85 /* RSSParser.m in Sources */,
 				AD6B8A1D2565EB2D0039DB85 /* FeedItem.m in Sources */,
 				AD6B8A172565E87F0039DB85 /* NetworkManager.m in Sources */,

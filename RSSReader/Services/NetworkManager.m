@@ -38,12 +38,7 @@ NSString * const url = @"http://news.tut.by/rss/index.rss";
     NSError *error;
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url] options:NSDataReadingUncached error:&error];
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSLog(@"%@", error);
-        if (error) {
-            completion(nil, error);
-        } else {
-            completion(data, nil);
-        }
+        completion(data, error);
     });
 }
 

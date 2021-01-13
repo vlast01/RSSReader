@@ -33,14 +33,16 @@
 }
 
 - (void)asyncLoadNewsWithCompletion:(void (^)(NSError *))completion {
-    self.completion = completion;
-    [NSThread detachNewThreadSelector:@selector(loadNews) toTarget:self withObject:nil];
+    if (completion) {
+        self.completion = completion;
+        [NSThread detachNewThreadSelector:@selector(loadNews) toTarget:self withObject:nil];
+    }
 }
 
 - (void)loadNews {
     @autoreleasepool {
         [self.networkManager loadFeedWithCompletion:^(NSData * data, NSError *error) {
-            if (error) {
+            if (error && self.completion) {
                 self.completion(error);
             }
             else {
