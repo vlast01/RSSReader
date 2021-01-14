@@ -9,14 +9,20 @@
 #import "FeedCell.h"
 #import "FeedItem.h"
 #import "UIViewController+ActivityIndicator.h"
+#import "CustomTableViewProtocol.h"
+#import "WebViewController.h"
 
-@interface FeedViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface FeedViewController () <UITableViewDataSource, UITableViewDelegate, CustomTableViewProtocol>
 
 @property (nonatomic, retain) UITableView* tableView;
 @property (nonatomic, retain) FeedPresenter* presenter;
 @property (nonatomic, retain) NSMutableArray<FeedItem*>* feedItemArray;
+@property (nonatomic, retain) NSMutableArray *flagsArray;
+@property (nonatomic, copy) NSString *pageTitle;
 
 @end
+
+NSString * const kPageTitle = @"TUT.BY";
 
 @implementation FeedViewController
 
@@ -25,15 +31,21 @@
     if (self) {
         _feedItemArray = [feedItemArray retain];
         _presenter = [presenter retain];
+        _pageTitle = kPageTitle;
     }
     return self;
 }
 
 - (void)viewDidLoad {
-    self.navigationController.navigationBar.hidden = YES;
     [super viewDidLoad];
     [self setupLayout];
     [self loadNews];
+    self.navigationItem.title = self.pageTitle;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [self.navigationController setToolbarHidden:YES];
+    [super viewWillAppear:animated];
 }
 
 - (void)setupLayout {
@@ -52,6 +64,7 @@
     [self.presenter asyncLoadNewsWithCompletion:^(NSError *error) {
         [self hideActivityIndicator];
         if (!error) {
+            [self fillFlagsArray];
             [self.tableView reloadData];
         }
         else {
@@ -78,11 +91,29 @@
     return _tableView;
 }
 
+- (NSMutableArray *)flagsArray {
+    if (!_flagsArray) {
+        _flagsArray = [NSMutableArray new];
+    }
+    return _flagsArray;
+}
+
+#pragma mark TableViewDataSourse implementation
+
+- (void)fillFlagsArray {
+    [self.flagsArray removeAllObjects];
+    for (int i = 0; i < self.feedItemArray.count; i++) {
+        [self.flagsArray addObject:@0];
+    }
+}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FeedCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellId"];
+    cell.isDescriptionShown = self.flagsArray[indexPath.row];
+    cell.delegate = self;
     if (self.feedItemArray.count != 0) {
-        [cell setItem: self.feedItemArray[indexPath.row]];
+        [cell configureWithItem: self.feedItemArray[indexPath.row] index:(int)indexPath.row];
     }
     [cell setupCell];
     return cell;
@@ -96,15 +127,39 @@
     return UITableViewAutomaticDimension;
 }
 
+#pragma mark TableViewDelegate implementation
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [[UIApplication sharedApplication] openURL:[[[NSURL alloc] initWithString:self.feedItemArray[indexPath.row].link] autorelease]];
+    NSURL *url = [NSURL URLWithString:self.feedItemArray[indexPath.row].link];
+    WebViewController *webViewController = [[WebViewController alloc] initWithURL:url];
+    
+    [self.navigationController pushViewController:webViewController animated:YES];
+    [webViewController release];
+}
+
+#pragma mark CustomTableViewProtocol implementation
+
+- (void)changeFlag:(int)index {
+    if ([self.flagsArray[index] isEqual:@0]) {
+        self.flagsArray[index] = @1;
+    }
+    else {
+        self.flagsArray[index] = @0;
+    }
+}
+
+- (void)refreshTableView:(int)index {
+    NSIndexPath *path = [NSIndexPath indexPathForRow:index inSection:0];
+    [self.tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (void)dealloc {
     [_tableView release];
     [_presenter release];
     [_feedItemArray release];
+    [_flagsArray release];
+    [_pageTitle release];
     [super dealloc];
 }
 
