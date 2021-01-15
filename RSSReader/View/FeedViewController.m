@@ -108,24 +108,17 @@ NSString * const kErrorTitle = @"Error";
     }
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FeedCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellId"];
     cell.isDescriptionShown = self.flagsArray[indexPath.row];
     cell.delegate = self;
-    if (self.feedItemArray.count != 0) {
-        [cell configureWithItem: self.feedItemArray[indexPath.row] index:(int)indexPath.row];
-    }
+    [cell configureWithItem: self.feedItemArray[indexPath.row] index:(int)indexPath.row];
     [cell setupCell];
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.feedItemArray.count;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return UITableViewAutomaticDimension;
 }
 
 #pragma mark TableViewDelegate implementation

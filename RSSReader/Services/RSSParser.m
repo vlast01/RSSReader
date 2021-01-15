@@ -39,7 +39,7 @@ NSString * const kDesiredFormat = @"yyyy/MM/dd";
 }
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary<NSString *,NSString *> *)attributeDict {
-
+    
     self.tempString = [[NSMutableString new] autorelease];
     self.currentElement = elementName;
     if([elementName isEqualToString:kItem]) {
@@ -48,10 +48,15 @@ NSString * const kDesiredFormat = @"yyyy/MM/dd";
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
-    
+
     if (self.array.count != 0) {
-        if ([self.currentElement isEqualToString:kTitle] && !self.array.lastObject.title) {
-            self.array.lastObject.title = string;
+        if ([self.currentElement isEqualToString:kTitle]) {
+            if (!self.array.lastObject.title) {
+                self.array.lastObject.title = string;
+            }
+            else {
+                self.array.lastObject.title = [self.array.lastObject.title stringByAppendingString:string];
+            }
         }
         else if ([self.currentElement isEqualToString:kDescription] && !self.array.lastObject.newsDescription) {
             [self.tempString appendString:string];
@@ -81,7 +86,7 @@ NSString * const kDesiredFormat = @"yyyy/MM/dd";
 }
 
 - (void)parseDescription:(NSMutableString *)description {
-   
+    
     description = [[self deleteUselessTagsFromDescription:description] mutableCopy];
     self.array.lastObject.newsDescription = description;
     [description release];
@@ -91,8 +96,8 @@ NSString * const kDesiredFormat = @"yyyy/MM/dd";
     NSRegularExpressionOptions regexOptions = NSRegularExpressionCaseInsensitive;
     NSError *error;
     NSRegularExpression* regex = [NSRegularExpression regularExpressionWithPattern:@"<[^<]+?>"
-                                    options:regexOptions
-                                       error:&error];
+                                                                           options:regexOptions
+                                                                             error:&error];
     NSArray* matches = [regex matchesInString:description options:0 range:NSMakeRange(0, [description length])];
     NSString *resultString = [NSString stringWithString:description];
     for ( NSTextCheckingResult* match in matches )

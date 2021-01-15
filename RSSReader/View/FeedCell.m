@@ -22,6 +22,9 @@
 @end
 
 int const kCellSpacing = 10;
+int const kButtonHeight = 30;
+int const kButtonWidth = 60;
+int const kFontSize = 10;
 
 @implementation FeedCell
 
@@ -50,11 +53,11 @@ int const kCellSpacing = 10;
         [self.stackView.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:-kCellSpacing],
         [self.stackView.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor constant:kCellSpacing],
         [self.stackView.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor constant:-kCellSpacing],
-        [self.buttonView.heightAnchor constraintEqualToConstant:3*kCellSpacing],
+        [self.buttonView.heightAnchor constraintEqualToConstant:kButtonHeight],
         [self.moreButton.centerYAnchor constraintEqualToAnchor:self.buttonView.centerYAnchor],
         [self.moreButton.trailingAnchor constraintEqualToAnchor:self.buttonView.trailingAnchor],
-        [self.moreButton.heightAnchor constraintEqualToConstant:3*kCellSpacing],
-        [self.moreButton.widthAnchor constraintEqualToConstant:6*kCellSpacing],
+        [self.moreButton.heightAnchor constraintEqualToConstant:kButtonHeight],
+        [self.moreButton.widthAnchor constraintEqualToConstant:kButtonWidth],
     ]];
 }
 
@@ -64,7 +67,7 @@ int const kCellSpacing = 10;
         _stackView.axis = UILayoutConstraintAxisVertical;
         _stackView.translatesAutoresizingMaskIntoConstraints = NO;
         [self.contentView addSubview:self.stackView];
-        _stackView.spacing = 10;
+        _stackView.spacing = kCellSpacing;
     }
     return _stackView;
 }
@@ -81,7 +84,7 @@ int const kCellSpacing = 10;
 - (UILabel *)pubDate {
     if (!_pubDate) {
         _pubDate = [UILabel new];
-        _pubDate.font = [UIFont systemFontOfSize:10];
+        _pubDate.font = [UIFont systemFontOfSize:kFontSize];
     }
     _pubDate.text = self.feedItem.pubDate;
     return _pubDate;
@@ -146,7 +149,7 @@ int const kCellSpacing = 10;
         _category = [UILabel new];
         _category.numberOfLines = 0;
         _category.translatesAutoresizingMaskIntoConstraints = NO;
-        _category.font = [UIFont boldSystemFontOfSize:10];
+        _category.font = [UIFont boldSystemFontOfSize:kFontSize];
     }
     _category.text = self.feedItem.category;
     return _category;
