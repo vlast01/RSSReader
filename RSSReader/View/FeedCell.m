@@ -16,6 +16,7 @@
 @property (nonatomic, retain) UIView *buttonView;
 @property (nonatomic, retain) UIButton *moreButton;
 @property (nonatomic, retain) UILabel *newsDescription;
+@property (nonatomic, retain) UILabel *category;
 @property (nonatomic, retain) UIStackView *descriptionStackView;
 
 @end
@@ -37,6 +38,7 @@ int const kCellSpacing = 10;
 - (void)setupLayout {
     [self.contentView addSubview:self.stackView];
     [self.stackView addArrangedSubview:self.title];
+    [self.stackView addArrangedSubview:self.category];
     [self.stackView addArrangedSubview:self.pubDate];
     [self.stackView addArrangedSubview:self.buttonView];
     [self.buttonView addSubview:self.moreButton];
@@ -139,6 +141,17 @@ int const kCellSpacing = 10;
     return _newsDescription;
 }
 
+- (UILabel *)category {
+    if (!_category) {
+        _category = [UILabel new];
+        _category.numberOfLines = 0;
+        _category.translatesAutoresizingMaskIntoConstraints = NO;
+        _category.font = [UIFont boldSystemFontOfSize:10];
+    }
+    _category.text = self.feedItem.category;
+    return _category;
+}
+
 - (void)dealloc {
     [_title release];
     [_pubDate release];
@@ -148,6 +161,7 @@ int const kCellSpacing = 10;
     [_newsDescription release];
     [_moreButton release];
     [_descriptionStackView release];
+    [_category release];
     [super dealloc];
 }
 

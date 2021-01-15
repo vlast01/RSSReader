@@ -23,6 +23,7 @@ NSString * const kTitle = @"title";
 NSString * const kDescription = @"description";
 NSString * const kLink = @"link";
 NSString * const kPubDate = @"pubDate";
+NSString * const kCategory = @"category";
 NSString * const kInitialFormat = @"EEE, dd MMM yyyy HH:mm:ss ZZZ";
 NSString * const kDesiredFormat = @"yyyy/MM/dd";
 
@@ -61,11 +62,14 @@ NSString * const kDesiredFormat = @"yyyy/MM/dd";
         else if ([self.currentElement isEqualToString:kPubDate] && !self.array.lastObject.pubDate) {
             self.array.lastObject.pubDate = [string changeDate:string fromFormat:kInitialFormat toFormat:kDesiredFormat];
         }
+        else if ([self.currentElement isEqualToString:kCategory] && !self.array.lastObject.category) {
+            self.array.lastObject.category = string;
+        }
     }
 }
 
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName {
-    if ([elementName isEqualToString:@"description"]) {
+    if ([elementName isEqualToString:kDescription]) {
         [self parseDescription:self.tempString];
     }
 }

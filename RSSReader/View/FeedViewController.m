@@ -23,6 +23,7 @@
 @end
 
 NSString * const kPageTitle = @"TUT.BY";
+NSString * const kErrorTitle = @"Error";
 
 @implementation FeedViewController
 
@@ -74,7 +75,7 @@ NSString * const kPageTitle = @"TUT.BY";
 }
 
 - (void)showError:(NSError *)error {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:kErrorTitle
                                                                    message:error.localizedDescription
                                                             preferredStyle:UIAlertControllerStyleAlert];
     [self presentViewController:alert animated:YES completion:nil];
@@ -151,7 +152,7 @@ NSString * const kPageTitle = @"TUT.BY";
 
 - (void)refreshTableView:(int)index {
     NSIndexPath *path = [NSIndexPath indexPathForRow:index inSection:0];
-    [self.tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)dealloc {

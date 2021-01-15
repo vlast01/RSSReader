@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) NSString* newsDescription;
 @property (nonatomic, copy) NSString* link;
 @property (nonatomic, copy) NSString* pubDate;
+@property (nonatomic, copy) NSString* category;
 
 @end
 
