@@ -24,6 +24,8 @@
 
 NSString * const kPageTitle = @"TUT.BY";
 NSString * const kErrorTitle = @"Error";
+NSString * const kErrorRetry = @"Retry";
+NSString * const kCellID = @"cellId";
 
 @implementation FeedViewController
 
@@ -78,6 +80,12 @@ NSString * const kErrorTitle = @"Error";
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:kErrorTitle
                                                                    message:error.localizedDescription
                                                             preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* retry = [UIAlertAction actionWithTitle:kErrorRetry
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction * action) {
+        [self loadNews];
+    }];
+    [alert addAction:retry];
     [self presentViewController:alert animated:YES completion:nil];
 }
 
@@ -87,7 +95,7 @@ NSString * const kErrorTitle = @"Error";
         _tableView.translatesAutoresizingMaskIntoConstraints = NO;
         _tableView.dataSource = self;
         _tableView.delegate = self;
-        [_tableView registerClass:FeedCell.class forCellReuseIdentifier:@"cellId"];
+        [_tableView registerClass:FeedCell.class forCellReuseIdentifier:kCellID];
     }
     return _tableView;
 }
@@ -109,11 +117,9 @@ NSString * const kErrorTitle = @"Error";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    FeedCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellId"];
-    cell.isDescriptionShown = self.flagsArray[indexPath.row];
+    FeedCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellID];
+    [cell configureWithItem: self.feedItemArray[indexPath.row] index:(int)indexPath.row flag:self.flagsArray[indexPath.row]];
     cell.delegate = self;
-    [cell configureWithItem: self.feedItemArray[indexPath.row] index:(int)indexPath.row];
-    [cell setupCell];
     return cell;
 }
 

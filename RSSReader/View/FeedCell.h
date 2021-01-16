@@ -19,8 +19,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id <CustomTableViewProtocol> delegate;
 @property (nonatomic, assign) int index;
 
+typedef NS_ENUM(NSInteger, cellState) {
+    HIDDEN = 0,
+    SHOWN = 1
+};
+
 - (void)setupCell;
-- (void)configureWithItem:(FeedItem *)item index:(int)index;
+- (void)configureWithItem:(FeedItem *)item index:(int)index flag:(NSNumber *)isDescriptionShown;
 
 @end
 

@@ -141,8 +141,7 @@
 - (void)openInSafari {
     [[UIApplication sharedApplication] openURL:self.webView.URL
                                          options:@{}
-                               completionHandler:^(BOOL success) {
-      }];
+                               completionHandler:nil];
 }
 
 - (void)stop {

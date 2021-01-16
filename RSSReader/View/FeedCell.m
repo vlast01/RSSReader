@@ -28,9 +28,11 @@ int const kFontSize = 10;
 
 @implementation FeedCell
 
-- (void)configureWithItem:(FeedItem *)item index:(int)index{
+- (void)configureWithItem:(FeedItem *)item index:(int)index flag:(NSNumber *)isDescriptionShown{
     self.feedItem = item;
     self.index = index;
+    self.isDescriptionShown = isDescriptionShown;
+    [self setupCell];
 }
 
 - (void)setupCell {
@@ -44,8 +46,9 @@ int const kFontSize = 10;
     [self.stackView addArrangedSubview:self.category];
     [self.stackView addArrangedSubview:self.pubDate];
     [self.stackView addArrangedSubview:self.buttonView];
-    [self.buttonView addSubview:self.moreButton];
     [self.stackView addArrangedSubview:self.descriptionStackView];
+    [self.buttonView addSubview:self.moreButton];
+    
     [self.descriptionStackView addArrangedSubview:self.newsDescription];
     
     [NSLayoutConstraint activateConstraints:@[
@@ -76,6 +79,7 @@ int const kFontSize = 10;
     if (!_title) {
         _title = [UILabel new];
         _title.numberOfLines = 0;
+        [_title sizeToFit];
     }
     _title.text = _feedItem.title;
     return _title;
@@ -108,11 +112,12 @@ int const kFontSize = 10;
 }
 
 - (void)buttonTapped {
-    if ([self.isDescriptionShown isEqual:@1]) {
-        self.isDescriptionShown = @0;
-    }
-    else {
-        self.isDescriptionShown = @1;
+    switch ([self.isDescriptionShown intValue]) {
+        case SHOWN:
+            self.isDescriptionShown = [NSNumber numberWithInteger:HIDDEN];
+            break;
+        case HIDDEN:
+            self.isDescriptionShown = [NSNumber numberWithInteger:SHOWN];
     }
     [self.delegate changeFlag:self.index];
     [self.delegate refreshTableView:self.index];
@@ -130,17 +135,16 @@ int const kFontSize = 10;
         _newsDescription = [UILabel new];
         _newsDescription.numberOfLines = 0;
     }
-    if ([_isDescriptionShown  isEqual: @1]) {
-        _descriptionStackView.hidden = NO;
-        [_moreButton setTitle:[NSString stringWithFormat:@"Less %C", 0x2191] forState:UIControlStateNormal];
+    switch ([_isDescriptionShown intValue]) {
+        case SHOWN:
+            _descriptionStackView.hidden = NO;
+            [_moreButton setTitle:[NSString stringWithFormat:@"Less %C", 0x2191] forState:UIControlStateNormal];
+            break;
+        case HIDDEN:
+            _descriptionStackView.hidden = YES;
+            [_moreButton setTitle:[NSString stringWithFormat:@"More %C", 0x2193] forState:UIControlStateNormal];
     }
-    else {
-        _descriptionStackView.hidden = YES;
-        [_moreButton setTitle:[NSString stringWithFormat:@"More %C", 0x2193] forState:UIControlStateNormal];
-    }
-    if (_feedItem.newsDescription != nil) {
-        _newsDescription.text = _feedItem.newsDescription;
-    }
+    _newsDescription.text = _feedItem.newsDescription;
     return _newsDescription;
 }
 
