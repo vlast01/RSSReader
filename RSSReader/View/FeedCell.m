@@ -32,10 +32,6 @@ int const kFontSize = 10;
     self.feedItem = item;
     self.index = index;
     self.isDescriptionShown = isDescriptionShown;
-    [self setupCell];
-}
-
-- (void)setupCell {
     self.backgroundColor = UIColor.whiteColor;
     [self setupLayout];
 }
@@ -113,11 +109,12 @@ int const kFontSize = 10;
 
 - (void)buttonTapped {
     switch ([self.isDescriptionShown intValue]) {
-        case SHOWN:
-            self.isDescriptionShown = [NSNumber numberWithInteger:HIDDEN];
+        case USCellStateShown:
+            self.isDescriptionShown = @(USCellStateHidden);
             break;
-        case HIDDEN:
-            self.isDescriptionShown = [NSNumber numberWithInteger:SHOWN];
+        case USCellStateHidden:
+            self.isDescriptionShown = @(USCellStateShown);
+            break;
     }
     [self.delegate changeFlag:self.index];
     [self.delegate refreshTableView:self.index];
@@ -136,11 +133,11 @@ int const kFontSize = 10;
         _newsDescription.numberOfLines = 0;
     }
     switch ([_isDescriptionShown intValue]) {
-        case SHOWN:
+        case USCellStateShown:
             _descriptionStackView.hidden = NO;
             [_moreButton setTitle:[NSString stringWithFormat:@"Less %C", 0x2191] forState:UIControlStateNormal];
             break;
-        case HIDDEN:
+        case USCellStateHidden:
             _descriptionStackView.hidden = YES;
             [_moreButton setTitle:[NSString stringWithFormat:@"More %C", 0x2193] forState:UIControlStateNormal];
     }

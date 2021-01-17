@@ -64,14 +64,15 @@ NSString * const kCellID = @"cellId";
 
 - (void)loadNews {
     [self showActivityIndicator];
+    __weak typeof(self) weakSelf = self;
     [self.presenter asyncLoadNewsWithCompletion:^(NSError *error) {
-        [self hideActivityIndicator];
+        [weakSelf hideActivityIndicator];
         if (!error) {
-            [self fillFlagsArray];
-            [self.tableView reloadData];
+            [weakSelf fillFlagsArray];
+            [weakSelf.tableView reloadData];
         }
         else {
-            [self showError:error];
+            [weakSelf showError:error];
         }
     }];
 }
