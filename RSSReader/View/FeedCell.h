@@ -8,6 +8,7 @@
 #import <UIKit/UIKit.h>
 #import "FeedItem.h"
 #import "CustomTableViewProtocol.h"
+#import "USCellStates.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,12 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id <CustomTableViewProtocol> delegate;
 @property (nonatomic, assign) int index;
 
-typedef NS_ENUM(NSInteger, CellState) {
-    USCellStateHidden = 0,
-    USCellStateShown = 1
-};
-
-- (void)configureWithItem:(FeedItem *)item index:(int)index flag:(NSNumber *)isDescriptionShown;
+- (void)configureWithItem:(FeedItem *)item index:(int)index flag:(NSNumber *)isDescriptionShown ;
 
 @end
 

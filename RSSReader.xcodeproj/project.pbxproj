@@ -50,6 +50,7 @@
 		D723D9692562E304003DF465 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D723D96B2562E304003DF465 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D723D96C2562E304003DF465 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FB08F82B25B6334C008316E2 /* USCellStates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = USCellStates.h; sourceTree = "<group>"; };
 		FB0F161F25B0C60600519D79 /* CustomTableViewProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomTableViewProtocol.h; sourceTree = "<group>"; };
 		FB0F162125B0CAA300519D79 /* WebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		FB0F162225B0CAA300519D79 /* WebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
@@ -88,6 +89,7 @@
 				AD6B8A162565E87F0039DB85 /* NetworkManager.m */,
 				AD6B8A2D2566A65E0039DB85 /* RSSParser.h */,
 				AD6B8A2E2566A65E0039DB85 /* RSSParser.m */,
+				FB08F82B25B6334C008316E2 /* USCellStates.h */,
 			);
 			path = Services;
 			sourceTree = "<group>";

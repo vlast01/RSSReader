@@ -64,7 +64,7 @@ NSString * const kCellID = @"cellId";
 
 - (void)loadNews {
     [self showActivityIndicator];
-    __weak typeof(self) weakSelf = self;
+    __block typeof(self) weakSelf = self;
     [self.presenter asyncLoadNewsWithCompletion:^(NSError *error) {
         [weakSelf hideActivityIndicator];
         if (!error) {
@@ -113,7 +113,7 @@ NSString * const kCellID = @"cellId";
 - (void)fillFlagsArray {
     [self.flagsArray removeAllObjects];
     for (int i = 0; i < self.feedItemArray.count; i++) {
-        [self.flagsArray addObject:@0];
+        [self.flagsArray addObject:@(USCellStateHidden)];
     }
 }
 
@@ -142,11 +142,11 @@ NSString * const kCellID = @"cellId";
 #pragma mark CustomTableViewProtocol implementation
 
 - (void)changeFlag:(int)index {
-    if ([self.flagsArray[index] isEqual:@0]) {
-        self.flagsArray[index] = @1;
+    if ([self.flagsArray[index] isEqual:@(USCellStateHidden)]) {
+        self.flagsArray[index] = @(USCellStateShown);
     }
     else {
-        self.flagsArray[index] = @0;
+        self.flagsArray[index] = @(USCellStateHidden);
     }
 }
 
