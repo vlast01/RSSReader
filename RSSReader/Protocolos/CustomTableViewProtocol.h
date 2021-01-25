@@ -11,8 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol CustomTableViewProtocol <NSObject>
 
-- (void)refreshTableView:(int)index;
-- (void)changeFlag:(int)index;
+- (void)changeFlagAndRefreshTableView:(int)index;
 
 @end
 

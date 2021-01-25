@@ -13,11 +13,11 @@
 @property (nonatomic, retain, readwrite) UILabel *title;
 @property (nonatomic, retain, readwrite) UILabel *pubDate;
 @property (nonatomic, retain) UIStackView *stackView;
-@property (nonatomic, retain) UIView *buttonView;
 @property (nonatomic, retain) UIButton *moreButton;
 @property (nonatomic, retain) UILabel *newsDescription;
 @property (nonatomic, retain) UILabel *category;
-@property (nonatomic, retain) UIStackView *descriptionStackView;
+@property (nonatomic, retain) UIStackView *additionalInfoStackView;
+@property (nonatomic, retain) UIView *spacingView;
 
 @end
 
@@ -25,38 +25,54 @@ int const kCellSpacing = 10;
 int const kButtonHeight = 30;
 int const kButtonWidth = 60;
 int const kFontSize = 10;
+int const kAdditionalStackViewSpacing = 5;
 
 @implementation FeedCell
+
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        [self setupLayout];
+    }
+    return self;
+}
 
 - (void)configureWithItem:(FeedItem *)item index:(int)index flag:(NSNumber *)isDescriptionShown{
     self.feedItem = item;
     self.index = index;
     self.isDescriptionShown = isDescriptionShown;
-    self.backgroundColor = UIColor.whiteColor;
-    [self setupLayout];
+    self.title.text = self.feedItem.title;
+    self.category.text = self.feedItem.category;
+    self.newsDescription.text = self.feedItem.newsDescription;
+    self.pubDate.text = self.feedItem.pubDate;
+    switch ([self.isDescriptionShown intValue]) {
+        case USCellStateShown:
+            self.newsDescription.hidden = NO;
+            [self.moreButton setTitle:[NSString stringWithFormat:@"Less %C", 0x2191] forState:UIControlStateNormal];
+            break;
+        case USCellStateHidden:
+            self.newsDescription.hidden = YES;
+            [self.moreButton setTitle:[NSString stringWithFormat:@"More %C", 0x2193] forState:UIControlStateNormal];
+    }
 }
 
 - (void)setupLayout {
+    self.backgroundColor = UIColor.whiteColor;
+    
     [self.contentView addSubview:self.stackView];
     [self.stackView addArrangedSubview:self.title];
-    [self.stackView addArrangedSubview:self.category];
-    [self.stackView addArrangedSubview:self.pubDate];
-    [self.stackView addArrangedSubview:self.buttonView];
-    [self.stackView addArrangedSubview:self.descriptionStackView];
-    [self.buttonView addSubview:self.moreButton];
-    
-    [self.descriptionStackView addArrangedSubview:self.newsDescription];
+    [self.stackView addArrangedSubview:self.additionalInfoStackView];
+    [self.additionalInfoStackView addArrangedSubview:self.pubDate];
+    [self.additionalInfoStackView addArrangedSubview:self.category];
+    [self.additionalInfoStackView addArrangedSubview:self.spacingView];
+    [self.additionalInfoStackView addArrangedSubview:self.moreButton];
+    [self.stackView addArrangedSubview:self.newsDescription];
     
     [NSLayoutConstraint activateConstraints:@[
         [self.stackView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor constant:kCellSpacing],
         [self.stackView.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:-kCellSpacing],
         [self.stackView.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor constant:kCellSpacing],
         [self.stackView.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor constant:-kCellSpacing],
-        [self.buttonView.heightAnchor constraintEqualToConstant:kButtonHeight],
-        [self.moreButton.centerYAnchor constraintEqualToAnchor:self.buttonView.centerYAnchor],
-        [self.moreButton.trailingAnchor constraintEqualToAnchor:self.buttonView.trailingAnchor],
-        [self.moreButton.heightAnchor constraintEqualToConstant:kButtonHeight],
-        [self.moreButton.widthAnchor constraintEqualToConstant:kButtonWidth],
     ]];
 }
 
@@ -75,9 +91,8 @@ int const kFontSize = 10;
     if (!_title) {
         _title = [UILabel new];
         _title.numberOfLines = 0;
-        [_title sizeToFit];
     }
-    _title.text = _feedItem.title;
+    _title.text = [[ _feedItem.title componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@" "];
     return _title;
 }
 
@@ -100,31 +115,18 @@ int const kFontSize = 10;
     return _moreButton;
 }
 
-- (UIView *)buttonView {
-    if (!_buttonView) {
-        _buttonView = [UIView new];
-    }
-    return _buttonView;
-}
-
 - (void)buttonTapped {
-    switch ([self.isDescriptionShown intValue]) {
-        case USCellStateShown:
-            self.isDescriptionShown = @(USCellStateHidden);
-            break;
-        case USCellStateHidden:
-            self.isDescriptionShown = @(USCellStateShown);
-            break;
-    }
-    [self.delegate changeFlag:self.index];
-    [self.delegate refreshTableView:self.index];
+    [self.delegate changeFlagAndRefreshTableView:self.index];
 }
 
-- (UIStackView *)descriptionStackView {
-    if (!_descriptionStackView) {
-        _descriptionStackView = [UIStackView new];
+- (UIStackView *)additionalInfoStackView {
+    if (!_additionalInfoStackView) {
+        _additionalInfoStackView = [UIStackView new];
+        _additionalInfoStackView.axis = UILayoutConstraintAxisHorizontal;
+        _additionalInfoStackView.spacing = kAdditionalStackViewSpacing;
+        
     }
-    return _descriptionStackView;
+    return _additionalInfoStackView;
 }
 
 - (UILabel *)newsDescription {
@@ -134,12 +136,10 @@ int const kFontSize = 10;
     }
     switch ([_isDescriptionShown intValue]) {
         case USCellStateShown:
-            _descriptionStackView.hidden = NO;
-            [_moreButton setTitle:[NSString stringWithFormat:@"Less %C", 0x2191] forState:UIControlStateNormal];
+            _newsDescription.hidden = NO;
             break;
         case USCellStateHidden:
-            _descriptionStackView.hidden = YES;
-            [_moreButton setTitle:[NSString stringWithFormat:@"More %C", 0x2193] forState:UIControlStateNormal];
+            _newsDescription.hidden = YES;
     }
     _newsDescription.text = _feedItem.newsDescription;
     return _newsDescription;
@@ -156,16 +156,23 @@ int const kFontSize = 10;
     return _category;
 }
 
+- (UIView *)spacingView {
+    if (!_spacingView) {
+        _spacingView = [UIView new];
+    }
+    return _spacingView;
+}
+
 - (void)dealloc {
     [_title release];
     [_pubDate release];
     [_feedItem release];
     [_stackView release];
-    [_buttonView release];
     [_newsDescription release];
     [_moreButton release];
-    [_descriptionStackView release];
+    [_additionalInfoStackView release];
     [_category release];
+    [_spacingView release];
     [super dealloc];
 }
 

@@ -141,16 +141,13 @@ NSString * const kCellID = @"cellId";
 
 #pragma mark CustomTableViewProtocol implementation
 
-- (void)changeFlag:(int)index {
+- (void)changeFlagAndRefreshTableView:(int)index {
     if ([self.flagsArray[index] isEqual:@(USCellStateHidden)]) {
         self.flagsArray[index] = @(USCellStateShown);
     }
     else {
         self.flagsArray[index] = @(USCellStateHidden);
     }
-}
-
-- (void)refreshTableView:(int)index {
     NSIndexPath *path = [NSIndexPath indexPathForRow:index inSection:0];
     [self.tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
 }

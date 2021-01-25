@@ -89,7 +89,6 @@
 				AD6B8A162565E87F0039DB85 /* NetworkManager.m */,
 				AD6B8A2D2566A65E0039DB85 /* RSSParser.h */,
 				AD6B8A2E2566A65E0039DB85 /* RSSParser.m */,
-				FB08F82B25B6334C008316E2 /* USCellStates.h */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -152,6 +151,7 @@
 				AD6B8A1A2565EAE90039DB85 /* Model */,
 				AD6B8A202565EF050039DB85 /* Presenter */,
 				FB0F162525B0D05500519D79 /* Protocolos */,
+				FBEE717525B882B800FE6A1B /* Enums */,
 				AD71CF83256EA35C008526DB /* Categories */,
 			);
 			path = RSSReader;
@@ -176,6 +176,14 @@
 				FB0F161F25B0C60600519D79 /* CustomTableViewProtocol.h */,
 			);
 			path = Protocolos;
+			sourceTree = "<group>";
+		};
+		FBEE717525B882B800FE6A1B /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				FB08F82B25B6334C008316E2 /* USCellStates.h */,
+			);
+			path = Enums;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
