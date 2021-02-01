@@ -17,8 +17,8 @@
 @property (nonatomic, retain) UITableView* tableView;
 @property (nonatomic, retain) FeedPresenter* presenter;
 @property (nonatomic, retain) NSMutableArray<FeedItem*>* feedItemArray;
-@property (nonatomic, retain) NSMutableArray *flagsArray;
 @property (nonatomic, copy) NSString *pageTitle;
+@property (nonatomic, retain) NSMutableDictionary *cellHeightsDictionary;
 
 @end
 
@@ -68,7 +68,6 @@ NSString * const kCellID = @"cellId";
     [self.presenter asyncLoadNewsWithCompletion:^(NSError *error) {
         [weakSelf hideActivityIndicator];
         if (!error) {
-            [weakSelf fillFlagsArray];
             [weakSelf.tableView reloadData];
         }
         else {
@@ -101,25 +100,18 @@ NSString * const kCellID = @"cellId";
     return _tableView;
 }
 
-- (NSMutableArray *)flagsArray {
-    if (!_flagsArray) {
-        _flagsArray = [NSMutableArray new];
+- (NSMutableDictionary *)cellHeightsDictionary {
+    if (!_cellHeightsDictionary) {
+        _cellHeightsDictionary = [NSMutableDictionary new];
     }
-    return _flagsArray;
+    return _cellHeightsDictionary;
 }
 
 #pragma mark TableViewDataSourse implementation
 
-- (void)fillFlagsArray {
-    [self.flagsArray removeAllObjects];
-    for (int i = 0; i < self.feedItemArray.count; i++) {
-        [self.flagsArray addObject:@(USCellStateHidden)];
-    }
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FeedCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellID];
-    [cell configureWithItem: self.feedItemArray[indexPath.row] index:(int)indexPath.row flag:self.flagsArray[indexPath.row]];
+    [cell configureWithItem: self.feedItemArray[indexPath.row] index:(int)indexPath.row];
     cell.delegate = self;
     return cell;
 }
@@ -139,25 +131,31 @@ NSString * const kCellID = @"cellId";
     [webViewController release];
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.cellHeightsDictionary setObject:@(cell.frame.size.height) forKey:indexPath];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSNumber *height = [self.cellHeightsDictionary objectForKey:indexPath];
+    if ([height boolValue]) return height.doubleValue;
+    return UITableViewAutomaticDimension;
+}
+
 #pragma mark CustomTableViewProtocol implementation
 
-- (void)changeFlagAndRefreshTableView:(int)index {
-    if ([self.flagsArray[index] isEqual:@(USCellStateHidden)]) {
-        self.flagsArray[index] = @(USCellStateShown);
-    }
-    else {
-        self.flagsArray[index] = @(USCellStateHidden);
-    }
+- (void)refreshTableViewCell:(int)index {
     NSIndexPath *path = [NSIndexPath indexPathForRow:index inSection:0];
-    [self.tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
+    [self.tableView performBatchUpdates:^{
+        [self.tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
+    } completion:nil];
 }
 
 - (void)dealloc {
     [_tableView release];
     [_presenter release];
     [_feedItemArray release];
-    [_flagsArray release];
     [_pageTitle release];
+    [_cellHeightsDictionary release];
     [super dealloc];
 }
 

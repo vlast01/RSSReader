@@ -12,12 +12,15 @@
 @property (nonatomic, retain) FeedItem *feedItem;
 @property (nonatomic, retain, readwrite) UILabel *title;
 @property (nonatomic, retain, readwrite) UILabel *pubDate;
-@property (nonatomic, retain) UIStackView *stackView;
 @property (nonatomic, retain) UIButton *moreButton;
 @property (nonatomic, retain) UILabel *newsDescription;
 @property (nonatomic, retain) UILabel *category;
-@property (nonatomic, retain) UIStackView *additionalInfoStackView;
-@property (nonatomic, retain) UIView *spacingView;
+
+@property (nonatomic, retain) NSLayoutConstraint *descriptionLeft;
+@property (nonatomic, retain) NSLayoutConstraint *descriptionRight;
+@property (nonatomic, retain) NSLayoutConstraint *descriptionTop;
+@property (nonatomic, retain) NSLayoutConstraint *descriptionBottom;
+@property (nonatomic, retain) NSLayoutConstraint *buttonBottom;
 
 @end
 
@@ -32,67 +35,70 @@ int const kAdditionalStackViewSpacing = 5;
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.descriptionTop = [self.newsDescription.topAnchor constraintEqualToAnchor:self.moreButton.bottomAnchor constant:kCellSpacing];
+        self.descriptionBottom = [self.newsDescription.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:-kCellSpacing];
+        self.descriptionLeft = [self.newsDescription.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor constant:kCellSpacing];
+        self.descriptionRight = [self.newsDescription.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor constant:-kCellSpacing];
+
+        self.buttonBottom = [self.moreButton.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:-kCellSpacing];
+        self.buttonBottom.priority = 500;
         [self setupLayout];
     }
     return self;
 }
 
-- (void)configureWithItem:(FeedItem *)item index:(int)index flag:(NSNumber *)isDescriptionShown{
+- (void)configureWithItem:(FeedItem *)item index:(int)index {
     self.feedItem = item;
     self.index = index;
-    self.isDescriptionShown = isDescriptionShown;
-    self.title.text = self.feedItem.title;
+    self.title.text = [[self.feedItem.title componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@" "];
     self.category.text = self.feedItem.category;
-    self.newsDescription.text = self.feedItem.newsDescription;
     self.pubDate.text = self.feedItem.pubDate;
-    switch ([self.isDescriptionShown intValue]) {
-        case USCellStateShown:
-            self.newsDescription.hidden = NO;
-            [self.moreButton setTitle:[NSString stringWithFormat:@"Less %C", 0x2191] forState:UIControlStateNormal];
-            break;
-        case USCellStateHidden:
-            self.newsDescription.hidden = YES;
-            [self.moreButton setTitle:[NSString stringWithFormat:@"More %C", 0x2193] forState:UIControlStateNormal];
+    if (self.feedItem.isDescriptionShown) {
+        self.newsDescription.text = self.feedItem.newsDescription;
+        [NSLayoutConstraint activateConstraints:@[self.descriptionTop, self.descriptionLeft, self.descriptionRight, self.descriptionBottom
+        ]];
+        [self.moreButton setTitle:[NSString stringWithFormat:@"Less %C", 0x2191] forState:UIControlStateNormal];
     }
-}
+    else {
+        self.newsDescription.text = @"";
+        [NSLayoutConstraint deactivateConstraints:@[self.descriptionTop, self.descriptionLeft, self.descriptionRight, self.descriptionBottom
+        ]];
+        [self.moreButton setTitle:[NSString stringWithFormat:@"More %C", 0x2193] forState:UIControlStateNormal];
+    }}
 
 - (void)setupLayout {
     self.backgroundColor = UIColor.whiteColor;
     
-    [self.contentView addSubview:self.stackView];
-    [self.stackView addArrangedSubview:self.title];
-    [self.stackView addArrangedSubview:self.additionalInfoStackView];
-    [self.additionalInfoStackView addArrangedSubview:self.pubDate];
-    [self.additionalInfoStackView addArrangedSubview:self.category];
-    [self.additionalInfoStackView addArrangedSubview:self.spacingView];
-    [self.additionalInfoStackView addArrangedSubview:self.moreButton];
-    [self.stackView addArrangedSubview:self.newsDescription];
+    [self.contentView addSubview:self.title];
+    [self.contentView addSubview:self.pubDate];
+    [self.contentView addSubview:self.category];
+    [self.contentView addSubview:self.moreButton];
+    [self.contentView addSubview:self.newsDescription];
     
     [NSLayoutConstraint activateConstraints:@[
-        [self.stackView.topAnchor constraintEqualToAnchor:self.contentView.topAnchor constant:kCellSpacing],
-        [self.stackView.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:-kCellSpacing],
-        [self.stackView.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor constant:kCellSpacing],
-        [self.stackView.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor constant:-kCellSpacing],
+        [self.title.topAnchor constraintEqualToAnchor:self.contentView.topAnchor constant:kCellSpacing],
+        [self.title.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor constant:kCellSpacing],
+        [self.title.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor constant:-kCellSpacing],
+
+        [self.pubDate.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor constant:kCellSpacing],
+        [self.pubDate.topAnchor constraintEqualToAnchor:self.title.bottomAnchor constant:kCellSpacing],
+
+        [self.category.leadingAnchor constraintEqualToAnchor:self.pubDate.trailingAnchor constant:kCellSpacing],
+        [self.category.topAnchor constraintEqualToAnchor:self.title.bottomAnchor constant:kCellSpacing],
+        
+        [self.moreButton.trailingAnchor constraintEqualToAnchor:self.contentView.trailingAnchor constant:-kCellSpacing],
+        [self.moreButton.topAnchor constraintEqualToAnchor:self.title.bottomAnchor constant:kCellSpacing],
+        self.buttonBottom,
     ]];
 }
 
-- (UIStackView *)stackView {
-    if (!_stackView) {
-        _stackView = [UIStackView new];
-        _stackView.axis = UILayoutConstraintAxisVertical;
-        _stackView.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.contentView addSubview:self.stackView];
-        _stackView.spacing = kCellSpacing;
-    }
-    return _stackView;
-}
 
 - (UILabel *)title {
     if (!_title) {
         _title = [UILabel new];
         _title.numberOfLines = 0;
+        _title.translatesAutoresizingMaskIntoConstraints = NO;
     }
-    _title.text = [[ _feedItem.title componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] componentsJoinedByString:@" "];
     return _title;
 }
 
@@ -100,8 +106,8 @@ int const kAdditionalStackViewSpacing = 5;
     if (!_pubDate) {
         _pubDate = [UILabel new];
         _pubDate.font = [UIFont systemFontOfSize:kFontSize];
+        _pubDate.translatesAutoresizingMaskIntoConstraints = NO;
     }
-    _pubDate.text = self.feedItem.pubDate;
     return _pubDate;
 }
 
@@ -115,33 +121,12 @@ int const kAdditionalStackViewSpacing = 5;
     return _moreButton;
 }
 
-- (void)buttonTapped {
-    [self.delegate changeFlagAndRefreshTableView:self.index];
-}
-
-- (UIStackView *)additionalInfoStackView {
-    if (!_additionalInfoStackView) {
-        _additionalInfoStackView = [UIStackView new];
-        _additionalInfoStackView.axis = UILayoutConstraintAxisHorizontal;
-        _additionalInfoStackView.spacing = kAdditionalStackViewSpacing;
-        
-    }
-    return _additionalInfoStackView;
-}
-
 - (UILabel *)newsDescription {
     if (!_newsDescription) {
         _newsDescription = [UILabel new];
         _newsDescription.numberOfLines = 0;
+        _newsDescription.translatesAutoresizingMaskIntoConstraints = NO;
     }
-    switch ([_isDescriptionShown intValue]) {
-        case USCellStateShown:
-            _newsDescription.hidden = NO;
-            break;
-        case USCellStateHidden:
-            _newsDescription.hidden = YES;
-    }
-    _newsDescription.text = _feedItem.newsDescription;
     return _newsDescription;
 }
 
@@ -152,27 +137,30 @@ int const kAdditionalStackViewSpacing = 5;
         _category.translatesAutoresizingMaskIntoConstraints = NO;
         _category.font = [UIFont boldSystemFontOfSize:kFontSize];
     }
-    _category.text = self.feedItem.category;
     return _category;
 }
 
-- (UIView *)spacingView {
-    if (!_spacingView) {
-        _spacingView = [UIView new];
-    }
-    return _spacingView;
+- (void)buttonTapped {
+    [self changeState];
+    [self.delegate refreshTableViewCell:self.index];
+}
+
+- (void)changeState {
+        self.feedItem.isDescriptionShown = !self.feedItem.isDescriptionShown;
 }
 
 - (void)dealloc {
     [_title release];
     [_pubDate release];
     [_feedItem release];
-    [_stackView release];
     [_newsDescription release];
     [_moreButton release];
-    [_additionalInfoStackView release];
     [_category release];
-    [_spacingView release];
+    [_buttonBottom release];
+    [_descriptionTop release];
+    [_descriptionLeft release];
+    [_descriptionRight release];
+    [_descriptionBottom release];
     [super dealloc];
 }
 

@@ -16,11 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, retain, readonly) UILabel *title;
 @property (nonatomic, retain, readonly) UILabel *pubDate;
-@property (nonatomic, assign) NSNumber *isDescriptionShown;
 @property (nonatomic, weak) id <CustomTableViewProtocol> delegate;
 @property (nonatomic, assign) int index;
 
-- (void)configureWithItem:(FeedItem *)item index:(int)index flag:(NSNumber *)isDescriptionShown ;
+- (void)configureWithItem:(FeedItem *)item index:(int)index;
 
 @end
 
