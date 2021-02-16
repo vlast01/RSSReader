@@ -35,6 +35,7 @@ int const kAdditionalStackViewSpacing = 5;
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.backgroundColor = [UIColor colorNamed:@"AppBackground"];
         self.descriptionTop = [self.newsDescription.topAnchor constraintEqualToAnchor:self.moreButton.bottomAnchor constant:kCellSpacing];
         self.descriptionBottom = [self.newsDescription.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:-kCellSpacing];
         self.descriptionLeft = [self.newsDescription.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor constant:kCellSpacing];
@@ -42,6 +43,7 @@ int const kAdditionalStackViewSpacing = 5;
 
         self.buttonBottom = [self.moreButton.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:-kCellSpacing];
         self.buttonBottom.priority = 500;
+        [self addViews];
         [self setupLayout];
     }
     return self;
@@ -66,15 +68,15 @@ int const kAdditionalStackViewSpacing = 5;
         [self.moreButton setTitle:[NSString stringWithFormat:@"More %C", 0x2193] forState:UIControlStateNormal];
     }}
 
-- (void)setupLayout {
-    self.backgroundColor = UIColor.whiteColor;
-    
+- (void)addViews {
     [self.contentView addSubview:self.title];
     [self.contentView addSubview:self.pubDate];
     [self.contentView addSubview:self.category];
     [self.contentView addSubview:self.moreButton];
     [self.contentView addSubview:self.newsDescription];
-    
+}
+
+- (void)setupLayout {
     [NSLayoutConstraint activateConstraints:@[
         [self.title.topAnchor constraintEqualToAnchor:self.contentView.topAnchor constant:kCellSpacing],
         [self.title.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor constant:kCellSpacing],

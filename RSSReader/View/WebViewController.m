@@ -25,7 +25,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = UIColor.whiteColor;
+    self.view.backgroundColor = [UIColor colorNamed:@"AppBackground"];
+    [self addViews];
     [self setupLayout];
     [self setupToolBar];
     [self openURL];
@@ -39,9 +40,11 @@
     return self;
 }
 
-- (void)setupLayout {
+- (void)addViews {
     [self.view addSubview:self.webView];
-    
+}
+
+- (void)setupLayout {
     [NSLayoutConstraint activateConstraints:@[
         [self.webView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
         [self.webView.topAnchor constraintEqualToAnchor:self.view.safeAreaLayoutGuide.topAnchor],
@@ -61,8 +64,7 @@
 }
 
 - (void)openURL {
-    NSURLRequest *nsrequest=[NSURLRequest requestWithURL:self.url];
-    [self.webView loadRequest:nsrequest];
+    [self.webView loadRequest:[NSURLRequest requestWithURL:self.url]];
 }
 
 - (void)setupToolBar {

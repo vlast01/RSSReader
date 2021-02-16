@@ -21,6 +21,7 @@
 		D723D96A2562E304003DF465 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D723D9682562E304003DF465 /* LaunchScreen.storyboard */; };
 		D723D96D2562E304003DF465 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D723D96C2562E304003DF465 /* main.m */; };
 		FB0F162325B0CAA300519D79 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB0F162225B0CAA300519D79 /* WebViewController.m */; };
+		FB5A49EF25DC6812002F1163 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB5A49EE25DC6812002F1163 /* Colors.xcassets */; };
 		FBEF823825AF273C00CA5C20 /* UIViewController+ActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = FBEF823725AF273C00CA5C20 /* UIViewController+ActivityIndicator.m */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +55,7 @@
 		FB0F161F25B0C60600519D79 /* CustomTableViewProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomTableViewProtocol.h; sourceTree = "<group>"; };
 		FB0F162125B0CAA300519D79 /* WebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		FB0F162225B0CAA300519D79 /* WebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		FB5A49EE25DC6812002F1163 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		FBEF823625AF273C00CA5C20 /* UIViewController+ActivityIndicator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+ActivityIndicator.h"; sourceTree = "<group>"; };
 		FBEF823725AF273C00CA5C20 /* UIViewController+ActivityIndicator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+ActivityIndicator.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -153,6 +155,7 @@
 				FB0F162525B0D05500519D79 /* Protocolos */,
 				FBEE717525B882B800FE6A1B /* Enums */,
 				AD71CF83256EA35C008526DB /* Categories */,
+				FB5A49EE25DC6812002F1163 /* Colors.xcassets */,
 			);
 			path = RSSReader;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB5A49EF25DC6812002F1163 /* Colors.xcassets in Resources */,
 				D723D96A2562E304003DF465 /* LaunchScreen.storyboard in Resources */,
 				D723D9672562E304003DF465 /* Assets.xcassets in Resources */,
 			);

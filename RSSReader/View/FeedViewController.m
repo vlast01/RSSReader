@@ -41,6 +41,7 @@ NSString * const kCellID = @"cellId";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self addViews];
     [self setupLayout];
     [self loadNews];
     self.navigationItem.title = self.pageTitle;
@@ -51,9 +52,11 @@ NSString * const kCellID = @"cellId";
     [super viewWillAppear:animated];
 }
 
-- (void)setupLayout {
+- (void)addViews {
     [self.view addSubview:self.tableView];
-    
+}
+
+- (void)setupLayout {
     [NSLayoutConstraint activateConstraints:@[
         [self.tableView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
         [self.tableView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
@@ -137,8 +140,7 @@ NSString * const kCellID = @"cellId";
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSNumber *height = [self.cellHeightsDictionary objectForKey:indexPath];
-    if ([height boolValue]) return height.doubleValue;
-    return UITableViewAutomaticDimension;
+    return [height boolValue] ? height.doubleValue : UITableViewAutomaticDimension;
 }
 
 #pragma mark CustomTableViewProtocol implementation
