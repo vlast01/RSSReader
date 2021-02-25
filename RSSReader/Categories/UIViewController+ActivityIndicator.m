@@ -19,5 +19,4 @@
     app.networkActivityIndicatorVisible = NO;
 }
 
-
 @end

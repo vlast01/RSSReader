@@ -7,6 +7,7 @@
 
 #import <UIKit/UIKit.h>
 #import "FeedPresenter.h"
+#import "USCellStates.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

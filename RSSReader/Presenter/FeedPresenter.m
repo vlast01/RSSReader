@@ -41,12 +41,13 @@
 
 - (void)loadNews {
     @autoreleasepool {
+        __block typeof(self) weakSelf = self;
         [self.networkManager loadFeedWithCompletion:^(NSData * data, NSError *error) {
-            if (error && self.completion) {
-                self.completion(error);
+            if (error && weakSelf.completion) {
+                weakSelf.completion(error);
             }
             else {
-                [self parseRowData:data completion:self.completion];
+                [weakSelf parseRowData:data completion:weakSelf.completion];
             }
         }];
     }

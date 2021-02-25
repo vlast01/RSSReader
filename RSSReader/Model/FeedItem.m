@@ -14,6 +14,7 @@
     [_newsDescription release];
     [_link release];
     [_pubDate release];
+    [_category release];
     [super dealloc];
 }
 

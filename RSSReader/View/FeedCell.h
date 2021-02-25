@@ -7,6 +7,8 @@
 
 #import <UIKit/UIKit.h>
 #import "FeedItem.h"
+#import "CustomTableViewProtocol.h"
+#import "USCellStates.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -14,9 +16,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, retain, readonly) UILabel *title;
 @property (nonatomic, retain, readonly) UILabel *pubDate;
+@property (nonatomic, weak) id <CustomTableViewProtocol> delegate;
+@property (nonatomic, assign) int index;
 
-- (void)setupCell;
-- (void)setItem:(FeedItem *)item;
+- (void)configureWithItem:(FeedItem *)item index:(int)index;
 
 @end
 
