@@ -13,12 +13,13 @@
 @property (nonatomic, retain) RSSParser *parser;
 @property (nonatomic, retain) NSMutableArray* feedItemArray;
 @property (nonatomic, copy) void (^completion)(NSError *);
+@property (nonatomic, copy) NSString *url;
 
 @end
 
 @implementation FeedPresenter
 
-- (id)initWithArray:(NSMutableArray *)array networkManager:(NetworkManager *)manager parser:(RSSParser *)parser{
+- (id)initWithArray:(NSMutableArray *)array networkManager:(NetworkManager *)manager parser:(RSSParser *)parser url:(NSString *)url {
     if (self = [super init]) {
         if (array) {
             _feedItemArray = [array retain];
@@ -26,6 +27,7 @@
         else {
             _feedItemArray = [NSMutableArray new];
         }
+        _url = [url retain];
         _networkManager = [manager retain];
         _parser = [parser retain];
     }
@@ -64,6 +66,7 @@
     [_feedItemArray release];
     [_parser release];
     [_completion release];
+    [_url release];
     [super dealloc];
 }
 @end

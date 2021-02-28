@@ -35,11 +35,27 @@ NSString * const url = @"http://news.tut.by/rss/index.rss";
 }
 
 - (void)loadFeedWithCompletion:(void (^)(NSData*, NSError*))completion {
-    NSError *error;
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:url] options:NSDataReadingUncached error:&error];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        completion(data, error);
-    });
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                                       timeoutInterval:10.0];
+    NSURLSessionDataTask *dataTask = [self.session dataTaskWithRequest:request
+                                                completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion(data, error);
+        });
+    }];
+    
+    [dataTask resume];
+  
+}
+
+- (NSString *)downloadHTML:(NSString *)url {
+    NSURL *URL = [NSURL URLWithString:url];
+    NSData *data = [NSData dataWithContentsOfURL:URL];
+
+    NSString *html = [NSString stringWithUTF8String:[data bytes]];
+    return html;
 }
 
 - (void)dealloc {

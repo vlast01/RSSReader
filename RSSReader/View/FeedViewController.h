@@ -13,7 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FeedViewController : UIViewController
 
-- (id)initWithFeedItemArray:(NSMutableArray *)feedItemArray presenter:(FeedPresenter *)presenter;
+@property (nonatomic, retain) NSMutableArray<FeedItem*>* feedItemArray;
+@property (nonatomic, retain) FeedPresenter* presenter;
+
+- (id)initWithTitle:(NSString *)title;
 
 @end
 

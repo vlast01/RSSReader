@@ -10,6 +10,8 @@
 #import "FeedPresenter.h"
 #import "NetworkManager.h"
 #import "RSSParser.h"
+#import "SearchPresenter.h"
+#import "SearchViewController.h"
 
 @interface AppDelegate ()
 
@@ -23,19 +25,23 @@
     UIWindow *window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     self.window = window;
     UINavigationController *navController = [UINavigationController new];
-    NSMutableArray *feedItemArray = [NSMutableArray new];
-    RSSParser *parser = [[RSSParser alloc] init];
-    FeedPresenter *presenter = [[FeedPresenter alloc] initWithArray:feedItemArray networkManager:[NetworkManager sharedInstance] parser:parser];
-    [parser release];
-    FeedViewController *feed = [[FeedViewController alloc] initWithFeedItemArray:feedItemArray presenter:presenter];
-    [presenter release];
-    [navController pushViewController:feed animated:false];
     [self.window makeKeyAndVisible];
-    [feed release];
     [window release];
+    
+    NetworkManager *manager = [NetworkManager new];
+    
+    SearchPresenter *presenter = [[SearchPresenter alloc] initWithNetworkManager:manager];
+    [manager release];
+    SearchViewController *searchViewController = [SearchViewController new];
+    searchViewController.presenter = presenter;
+    [presenter release];
+    [navController pushViewController:searchViewController animated:false];
+    
+    
     self.window.rootViewController = navController;
+    [searchViewController release];
     [navController release];
-    [feedItemArray release];
+  //  [feedItemArray release];
     return YES;
 }
 

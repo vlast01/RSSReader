@@ -15,8 +15,6 @@
 @interface FeedViewController () <UITableViewDataSource, UITableViewDelegate, CustomTableViewProtocol>
 
 @property (nonatomic, retain) UITableView* tableView;
-@property (nonatomic, retain) FeedPresenter* presenter;
-@property (nonatomic, retain) NSMutableArray<FeedItem*>* feedItemArray;
 @property (nonatomic, copy) NSString *pageTitle;
 @property (nonatomic, retain) NSMutableDictionary *cellHeightsDictionary;
 
@@ -29,12 +27,9 @@ NSString * const kCellID = @"cellId";
 
 @implementation FeedViewController
 
-- (id)initWithFeedItemArray:(NSMutableArray *)feedItemArray presenter:(FeedPresenter *)presenter{
-    self = [super init];
-    if (self) {
-        _feedItemArray = [feedItemArray retain];
-        _presenter = [presenter retain];
-        _pageTitle = kPageTitle;
+- (id)initWithTitle:(NSString *)title {
+    if (self = [super init]) {
+        _pageTitle = [title retain];
     }
     return self;
 }
@@ -80,16 +75,24 @@ NSString * const kCellID = @"cellId";
 }
 
 - (void)showError:(NSError *)error {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:kErrorTitle
-                                                                   message:error.localizedDescription
-                                                            preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction* retry = [UIAlertAction actionWithTitle:kErrorRetry
-                                                        style:UIAlertActionStyleDefault
-                                                      handler:^(UIAlertAction * action) {
-        [self loadNews];
-    }];
-    [alert addAction:retry];
-    [self presentViewController:alert animated:YES completion:nil];
+
+    @try {
+//        UIAlertController *alert = [UIAlertController alertControllerWithTitle:kErrorTitle
+//                                                                       message:error.localizedDescription
+//                                                                preferredStyle:UIAlertControllerStyleAlert];
+//        UIAlertAction* retry = [UIAlertAction actionWithTitle:kErrorRetry
+//                                                            style:UIAlertActionStyleDefault
+//                                                          handler:^(UIAlertAction * action) {
+//            [self loadNews];
+//        }];
+//        [alert addAction:retry];
+//        [self presentViewController:alert animated:YES completion:nil];
+    } @catch (NSException *exception) {
+        NSLog(@"Exception: %@", exception);
+    } @finally {
+        
+    }
+ 
 }
 
 - (UITableView *)tableView {

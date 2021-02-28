@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)sharedInstance;
 - (void)loadFeedWithCompletion:(void (^)(NSData* _Nullable, NSError* _Nullable))completion;
+- (NSString *)downloadHTML:(NSString *)url;
 
 @end
 

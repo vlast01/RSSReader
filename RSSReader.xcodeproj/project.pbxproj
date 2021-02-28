@@ -20,6 +20,11 @@
 		D723D9672562E304003DF465 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D723D9662562E304003DF465 /* Assets.xcassets */; };
 		D723D96A2562E304003DF465 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D723D9682562E304003DF465 /* LaunchScreen.storyboard */; };
 		D723D96D2562E304003DF465 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D723D96C2562E304003DF465 /* main.m */; };
+		FB08634925E828C30065B82F /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB08634825E828C30065B82F /* SearchViewController.m */; };
+		FB08634D25E829D80065B82F /* SearchFeedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = FB08634C25E829D80065B82F /* SearchFeedItem.m */; };
+		FB08635125E82A180065B82F /* SearchPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = FB08635025E82A180065B82F /* SearchPresenter.m */; };
+		FB08635525E82B250065B82F /* HTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = FB08635425E82B250065B82F /* HTMLParser.m */; };
+		FB08636525EC42660065B82F /* FileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FB08636425EC42660065B82F /* FileManager.m */; };
 		FB0F162325B0CAA300519D79 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB0F162225B0CAA300519D79 /* WebViewController.m */; };
 		FB5A49EF25DC6812002F1163 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB5A49EE25DC6812002F1163 /* Colors.xcassets */; };
 		FBEF823825AF273C00CA5C20 /* UIViewController+ActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = FBEF823725AF273C00CA5C20 /* UIViewController+ActivityIndicator.m */; };
@@ -51,6 +56,17 @@
 		D723D9692562E304003DF465 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D723D96B2562E304003DF465 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D723D96C2562E304003DF465 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FB08634725E828C30065B82F /* SearchViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		FB08634825E828C30065B82F /* SearchViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		FB08634B25E829D80065B82F /* SearchFeedItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchFeedItem.h; sourceTree = "<group>"; };
+		FB08634C25E829D80065B82F /* SearchFeedItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchFeedItem.m; sourceTree = "<group>"; };
+		FB08634F25E82A180065B82F /* SearchPresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchPresenter.h; sourceTree = "<group>"; };
+		FB08635025E82A180065B82F /* SearchPresenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchPresenter.m; sourceTree = "<group>"; };
+		FB08635325E82B250065B82F /* HTMLParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTMLParser.h; sourceTree = "<group>"; };
+		FB08635425E82B250065B82F /* HTMLParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HTMLParser.m; sourceTree = "<group>"; };
+		FB08635725E82C010065B82F /* ExceptionProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExceptionProtocol.h; sourceTree = "<group>"; };
+		FB08636325EC42660065B82F /* FileManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileManager.h; sourceTree = "<group>"; };
+		FB08636425EC42660065B82F /* FileManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FileManager.m; sourceTree = "<group>"; };
 		FB08F82B25B6334C008316E2 /* USCellStates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = USCellStates.h; sourceTree = "<group>"; };
 		FB0F161F25B0C60600519D79 /* CustomTableViewProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomTableViewProtocol.h; sourceTree = "<group>"; };
 		FB0F162125B0CAA300519D79 /* WebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
@@ -80,6 +96,8 @@
 				AD6B8A0A2565E00F0039DB85 /* FeedCell.m */,
 				FB0F162125B0CAA300519D79 /* WebViewController.h */,
 				FB0F162225B0CAA300519D79 /* WebViewController.m */,
+				FB08634725E828C30065B82F /* SearchViewController.h */,
+				FB08634825E828C30065B82F /* SearchViewController.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -91,6 +109,10 @@
 				AD6B8A162565E87F0039DB85 /* NetworkManager.m */,
 				AD6B8A2D2566A65E0039DB85 /* RSSParser.h */,
 				AD6B8A2E2566A65E0039DB85 /* RSSParser.m */,
+				FB08635325E82B250065B82F /* HTMLParser.h */,
+				FB08635425E82B250065B82F /* HTMLParser.m */,
+				FB08636325EC42660065B82F /* FileManager.h */,
+				FB08636425EC42660065B82F /* FileManager.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -100,6 +122,8 @@
 			children = (
 				AD6B8A1B2565EB2D0039DB85 /* FeedItem.h */,
 				AD6B8A1C2565EB2D0039DB85 /* FeedItem.m */,
+				FB08634B25E829D80065B82F /* SearchFeedItem.h */,
+				FB08634C25E829D80065B82F /* SearchFeedItem.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -109,6 +133,8 @@
 			children = (
 				AD6B8A282565F6EA0039DB85 /* FeedPresenter.h */,
 				AD6B8A292565F6EA0039DB85 /* FeedPresenter.m */,
+				FB08634F25E82A180065B82F /* SearchPresenter.h */,
+				FB08635025E82A180065B82F /* SearchPresenter.m */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -148,11 +174,11 @@
 			isa = PBXGroup;
 			children = (
 				D723D9B22563CFAF003DF465 /* Support */,
+				FB0F162525B0D05500519D79 /* Protocolos */,
 				AD6B8A0125657C7F0039DB85 /* View */,
 				AD6B8A142565E7200039DB85 /* Services */,
 				AD6B8A1A2565EAE90039DB85 /* Model */,
 				AD6B8A202565EF050039DB85 /* Presenter */,
-				FB0F162525B0D05500519D79 /* Protocolos */,
 				FBEE717525B882B800FE6A1B /* Enums */,
 				AD71CF83256EA35C008526DB /* Categories */,
 				FB5A49EE25DC6812002F1163 /* Colors.xcassets */,
@@ -176,6 +202,7 @@
 		FB0F162525B0D05500519D79 /* Protocolos */ = {
 			isa = PBXGroup;
 			children = (
+				FB08635725E82C010065B82F /* ExceptionProtocol.h */,
 				FB0F161F25B0C60600519D79 /* CustomTableViewProtocol.h */,
 			);
 			path = Protocolos;
@@ -264,13 +291,18 @@
 				AD6B8A0B2565E0100039DB85 /* FeedCell.m in Sources */,
 				AD6B8A0625657CCF0039DB85 /* FeedViewController.m in Sources */,
 				FBEF823825AF273C00CA5C20 /* UIViewController+ActivityIndicator.m in Sources */,
+				FB08634925E828C30065B82F /* SearchViewController.m in Sources */,
 				FB0F162325B0CAA300519D79 /* WebViewController.m in Sources */,
 				AD6B8A2F2566A65E0039DB85 /* RSSParser.m in Sources */,
 				AD6B8A1D2565EB2D0039DB85 /* FeedItem.m in Sources */,
+				FB08635125E82A180065B82F /* SearchPresenter.m in Sources */,
 				AD6B8A172565E87F0039DB85 /* NetworkManager.m in Sources */,
 				D723D96D2562E304003DF465 /* main.m in Sources */,
 				AD71CF81256EA28F008526DB /* NSDateFormatter+InitializingWithFormat.m in Sources */,
+				FB08635525E82B250065B82F /* HTMLParser.m in Sources */,
 				AD6B8A2A2565F6EA0039DB85 /* FeedPresenter.m in Sources */,
+				FB08634D25E829D80065B82F /* SearchFeedItem.m in Sources */,
+				FB08636525EC42660065B82F /* FileManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
