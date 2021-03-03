@@ -7,6 +7,9 @@
 
 #import "SearchFeedItem.h"
 
+NSString * const kTitleKey = @"title";
+NSString * const kUrlKey = @"url";
+
 @implementation SearchFeedItem
 
 + (BOOL)supportsSecureCoding {
@@ -14,15 +17,15 @@
 }
 
 - (void)encodeWithCoder:(nonnull NSCoder *)coder {
-    [coder encodeObject:self.title forKey:@"title"];
-    [coder encodeObject:self.url forKey:@"url"];
+    [coder encodeObject:self.title forKey:kTitleKey];
+    [coder encodeObject:self.url forKey:kUrlKey];
 }
 
 - (instancetype)initWithCoder:(NSCoder *)coder {
     self = [super init];
     if (self) {
-        self.title = [coder decodeObjectOfClass:[SearchFeedItem class] forKey:@"title"];
-        self.url = [coder decodeObjectOfClass:[SearchFeedItem class] forKey:@"url"];
+        self.title = [coder decodeObjectOfClass:[SearchFeedItem class] forKey:kTitleKey];
+        self.url = [coder decodeObjectOfClass:[SearchFeedItem class] forKey:kUrlKey];
      }
      return self;
 }
