@@ -14,11 +14,22 @@
 
 @interface SearchViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, ExceptionProtocol>
 
-@property (nonatomic, strong)UISearchBar *searchBar;
-@property (nonatomic, strong)UITableView *tableView;
+@property (nonatomic, retain)UISearchBar *searchBar;
+@property (nonatomic, retain)UITableView *tableView;
 @property (nonatomic, retain)NSMutableArray<SearchFeedItem *>*itemsArray;
 
 @end
+
+CGFloat const kSearchBarBorderWidth = 1;
+
+NSString * const kNavigationItemTitleText = @"Search feeds";
+NSString * const kSearchBarPlaceholder = @"Enter site name";
+NSString * const kSellIdentifier = @"cellId";
+NSString * const kSectionHeaderTitle = @"RESULTS";
+NSString * const kErrorText = @"Error";
+NSString * const kCancelText = @"Cancel";
+NSString * const kDirectFeedTitle = @"Feed";
+
 
 @implementation SearchViewController
 
@@ -32,7 +43,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     self.navigationController.navigationBar.hidden = NO;
-    self.navigationItem.title = @"Search feeds";
+    self.navigationItem.title = kNavigationItemTitleText;
     [super viewWillAppear:animated];
 }
 
@@ -58,8 +69,8 @@
     if (!_searchBar) {
         _searchBar = [UISearchBar new];
         _searchBar.translatesAutoresizingMaskIntoConstraints = NO;
-        _searchBar.placeholder = @"Enter site name";
-        _searchBar.layer.borderWidth = 1;
+        _searchBar.placeholder = kSearchBarPlaceholder;
+        _searchBar.layer.borderWidth = kSearchBarBorderWidth;
         _searchBar.delegate = self;
         _searchBar.layer.borderColor = [UIColor colorWithRed:240.0/255.0 green:240.0/255.0 blue:241.0/255.0 alpha:1].CGColor;
     }
@@ -72,7 +83,7 @@
         _tableView.translatesAutoresizingMaskIntoConstraints = NO;
         _tableView.dataSource = self;
         _tableView.delegate = self;
-        [_tableView registerClass:UITableViewCell.class forCellReuseIdentifier:@"cellId"];
+        [_tableView registerClass:UITableViewCell.class forCellReuseIdentifier:kSellIdentifier];
     }
     return _tableView;
 }
@@ -84,18 +95,20 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellId"];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kSellIdentifier];
     cell.textLabel.text = self.itemsArray[indexPath.row].title;
     return cell;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return @"Results";
+    return kSectionHeaderTitle;
 }
+
+#pragma mark UITableViewDataDelegate implementation
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self saveChoiseAtIndexPath:indexPath];
+    [self saveChoise:self.itemsArray[indexPath.row]];
     [self createAndPushFeedViewController:indexPath];
 }
 
@@ -117,30 +130,53 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [self showActivityIndicator];
-    NSMutableArray *itemsArray = [NSMutableArray new];
-    self.itemsArray = itemsArray;
+
     __block typeof(self) weakSelf = self;
-    [self.presenter searchFeeds:searchBar.text array:itemsArray completion:^{
-        [weakSelf hideActivityIndicator];
-        [weakSelf.tableView reloadData];
+    [self.presenter checkDirectLink:searchBar.text completion:^(NSError * error, NSMutableArray *  array) {
+        if (array.count>0) {
+            SearchFeedItem *item = [[SearchFeedItem alloc] init];
+            item.title = kDirectFeedTitle;
+            item.url = searchBar.text;
+            [self saveChoise:item];
+            [item release];
+            FeedViewController *directFeedController = [[FeedViewController alloc] initWithTitle:kDirectFeedTitle];
+            directFeedController.feedItemArray = array;
+            RSSParser *parser = [RSSParser new];
+            FeedPresenter *presenter = [[FeedPresenter alloc] initWithArray:array networkManager:[NetworkManager sharedInstance] parser:parser url:searchBar.text];
+            directFeedController.presenter = presenter;
+            [weakSelf.navigationController pushViewController:directFeedController animated:false];
+            [directFeedController release];
+            [parser release];
+            [presenter release];
+       
+        } else {
+            NSMutableArray *itemsArray = [NSMutableArray new];
+            weakSelf.itemsArray = itemsArray;
+
+            [weakSelf.presenter searchFeeds:searchBar.text array:itemsArray completion:^{
+                [weakSelf hideActivityIndicator];
+                [weakSelf.tableView reloadData];
+            }];
+            [itemsArray release];
+        }
+
     }];
-    [itemsArray release];
 }
 
 - (void)showException:(NSString *)message {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:kErrorText
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:kCancelText style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:cancel];
     [self presentViewController:alert animated:YES completion:nil];
 }
 
 
-- (void)saveChoiseAtIndexPath:(NSIndexPath *)indexPath{
+- (void)saveChoise:(SearchFeedItem *)item{
 
     FileManager *fileManager = [[FileManager alloc] init];
-    [fileManager writeToFile:self.itemsArray[indexPath.row]];
+    [fileManager writeToFile:item];
     [fileManager release];
 
 }

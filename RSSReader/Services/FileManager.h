@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface FileManager : NSObject
 
 - (void)writeToFile:(SearchFeedItem *)item;
+- (SearchFeedItem *)readData ;
 
 @end
 

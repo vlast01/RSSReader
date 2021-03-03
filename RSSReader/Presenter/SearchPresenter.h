@@ -14,10 +14,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SearchPresenter : NSObject
 
-@property (nonatomic, weak) id <ExceptionProtocol> delegate;
+@property (nonatomic, assign) id <ExceptionProtocol> delegate;
 
 - (id)initWithNetworkManager:(NetworkManager *)manager;
 - (void)searchFeeds:(NSString *)url array:(NSMutableArray<SearchFeedItem *> *)array completion:(void (^)(void))completion;
+- (void)checkDirectLink:(NSString *)url completion:(void (^)(NSError *, NSMutableArray *array))completion;
 
 @end
 

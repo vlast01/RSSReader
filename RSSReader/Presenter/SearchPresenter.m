@@ -7,12 +7,17 @@
 
 #import "SearchPresenter.h"
 #import "HTMLParser.h"
+#import "RSSParser.h"
 
 @interface SearchPresenter ()
 
-@property (nonatomic, strong) NetworkManager *networkManager;
+@property (nonatomic, retain) NetworkManager *networkManager;
 
 @end
+
+NSString * const kNoSuchSiteMessage = @"No such site";
+NSString * const kNoRSSFeedsMessage = @"No RSS feeds";
+NSString * const kBadFormatMessage = @"Bad format";
 
 @implementation SearchPresenter
 
@@ -27,39 +32,64 @@
     [array retain];
     url = [self configureURL:url];
     if ([self validateUrl:url]) {
-        @try {
-            NSString *html = [self.networkManager downloadHTML:url];
-
-            HTMLParser *htmlParser = [HTMLParser new];
-            [htmlParser parseHTML:html array:(NSMutableArray<SearchFeedItem *> *)array];
-            [htmlParser release];
-                if (array.count == 0) {
-                    [self.delegate showException:@"No RSS feeds"];
-                }
-                completion();
-        } @catch (NSException *exception) {
-            [self.delegate showException:@"No such site"];
+        NSString *html = [self.networkManager downloadHTML:url];
+        
+        if ([html isEqualToString:@""]) {
+            [self.delegate showException:kNoSuchSiteMessage];
             completion();
-        } @finally {
-
+        } else {
+            HTMLParser *htmlParser = [HTMLParser new];
+            [htmlParser parseHTML:html array:array sitename:url];
+            [htmlParser release];
+            if (array.count == 0) {
+                [self.delegate showException:kNoRSSFeedsMessage];
+            }
+            completion();
         }
     } else {
-        [self.delegate showException:@"Bad format"];
+        [self.delegate showException:kBadFormatMessage];
         completion();
     }
+    [array release];
 }
 
 - (BOOL)validateUrl: (NSString *) candidate {
-    NSString *urlRegEx = @"(http|https)://((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+";
+    NSString *urlRegEx = @"(http|https|Http|Https)://((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+";
     NSPredicate *urlTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", urlRegEx];
     return [urlTest evaluateWithObject:candidate];
 }
 
 - (NSString *)configureURL:(NSString *)url {
-    if (![url containsString:@"https://"] && ![url containsString:@"Https://"]) {
+    if (![url containsString:@"http://"] && ![url containsString:@"Http://"] && ![url containsString:@"https://"] && ![url containsString:@"Https://"] && ![url containsString:@"HTTPS://"] && ![url containsString:@"HTTP://"] && ![url containsString:@"HTTPs://"]) {
         url = [NSString stringWithFormat:@"https://%@", url];
     }
     return url;
+}
+
+- (void)checkDirectLink:(NSString *)url completion:(void (^)(NSError * , NSMutableArray * ))completion {
+    
+    url = [self configureURL:url];
+    
+    if ([self validateUrl:url]) {
+        __block typeof(self) weakSelf = self;
+        [self.networkManager loadFeed:url completion:^(NSData * data, NSError * error) {
+            if (data) {
+                RSSParser *rssParser = [RSSParser new];
+                NSMutableArray *array = [NSMutableArray new];
+                [rssParser parseFeedWithData:data array:array completion:^(NSError * error) {
+                    completion(nil, array);
+
+                }];
+                [rssParser release];
+                [array release];
+            }
+            else {
+                [weakSelf.delegate showException:kNoSuchSiteMessage];
+            }
+        }];
+    } else {
+        [self.delegate showException:kBadFormatMessage];
+    }
 }
 
 - (void)dealloc {

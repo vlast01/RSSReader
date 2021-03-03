@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface HTMLParser : NSObject
 
-- (void)parseHTML:(NSString *)htmlString array:(NSMutableArray<SearchFeedItem *> *)array;
+- (void)parseHTML:(NSString *)htmlString array:(NSMutableArray<SearchFeedItem *> *)array sitename:(NSString *)sitename;
 
 @end
 

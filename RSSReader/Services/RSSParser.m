@@ -16,6 +16,8 @@
 @property (nonatomic, retain)NSString *currentElement;
 @property (nonatomic, retain) NSMutableString *tempString;
 
+@property (nonatomic, assign) BOOL isCompletionReturned;
+
 @end
 
 NSString * const kItem = @"item";
@@ -30,12 +32,15 @@ NSString * const kDesiredFormat = @"yyyy/MM/dd";
 @implementation RSSParser
 
 - (void)parseFeedWithData:(NSData *)data array:(NSMutableArray<FeedItem *>*)array completion:(void (^)(NSError *))completion{
+    self.isCompletionReturned = NO;
     NSXMLParser *parser = [NSXMLParser parserWithData:data delegate:self];
     self.array = [array retain];
     self.completion = completion;
     [array release];
     [parser parse];
-    completion(nil);
+    if (!self.isCompletionReturned) {
+        completion(nil);
+    }
 }
 
 - (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary<NSString *,NSString *> *)attributeDict {
@@ -81,6 +86,7 @@ NSString * const kDesiredFormat = @"yyyy/MM/dd";
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
     if (self.completion) {
+        self.isCompletionReturned = YES;
         self.completion(parseError);
     }
 }

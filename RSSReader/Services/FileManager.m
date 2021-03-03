@@ -25,32 +25,20 @@
 }
 
 - (void)writeToFile:(SearchFeedItem *)item {
+
+    NSLog(@"%@",[self readData]);
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:item requiringSecureCoding:YES error:nil];
+    [data writeToFile:self.path atomically:NO];
+    NSLog(@"%@",[self readData]);
     
-    if (![self isRepeat:item]) {
-        NSMutableArray *tempArray = [NSMutableArray arrayWithArray:[self readData]];
-        [tempArray addObject:item];
-        
-        NSData *data = [NSKeyedArchiver archivedDataWithRootObject:tempArray requiringSecureCoding:YES error:nil];
-        [data writeToFile:self.path atomically:NO];
-    }
 }
 
-
-- (NSArray<SearchFeedItem *>*)readData {
+- (SearchFeedItem *)readData {
     NSData *data = [[NSMutableData alloc]initWithContentsOfFile:self.path];
-    NSArray *entries = [NSKeyedUnarchiver unarchivedArrayOfObjectsOfClass:[SearchFeedItem class] fromData:[data autorelease] error:nil];
-    
-    return entries;
-}
+    SearchFeedItem *result = [NSKeyedUnarchiver unarchivedObjectOfClass:[SearchFeedItem class] fromData:data error:nil];
+    [data release];
+    return result;
 
-- (BOOL)isRepeat:(SearchFeedItem *)item {
-    NSMutableArray *tempArray = [NSMutableArray arrayWithArray:[self readData]];
-    for (SearchFeedItem *note in tempArray) {
-        if ([note.title isEqualToString:item.title]) {
-            return YES;
-        }
-    }
-    return NO;
 }
 
 - (void)dealloc {

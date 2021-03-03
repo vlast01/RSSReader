@@ -24,9 +24,6 @@
         if (array) {
             _feedItemArray = [array retain];
         }
-        else {
-            _feedItemArray = [NSMutableArray new];
-        }
         _url = [url retain];
         _networkManager = [manager retain];
         _parser = [parser retain];
@@ -44,7 +41,7 @@
 - (void)loadNews {
     @autoreleasepool {
         __block typeof(self) weakSelf = self;
-        [self.networkManager loadFeedWithCompletion:^(NSData * data, NSError *error) {
+        [self.networkManager loadFeed:self.url completion:^(NSData * data, NSError *error) {
             if (error && weakSelf.completion) {
                 weakSelf.completion(error);
             }
@@ -59,6 +56,13 @@
     [self.parser parseFeedWithData:data array:self.feedItemArray completion:^(NSError *error) {
         completion(error);
     }];
+}
+
+- (NSMutableArray *)feedItemArray {
+    if (!_feedItemArray) {
+        _feedItemArray = [NSMutableArray new];
+    }
+    return _feedItemArray;
 }
 
 - (void)dealloc {

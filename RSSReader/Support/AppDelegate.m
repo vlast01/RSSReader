@@ -12,6 +12,7 @@
 #import "RSSParser.h"
 #import "SearchPresenter.h"
 #import "SearchViewController.h"
+#import "FileManager.h"
 
 @interface AppDelegate ()
 
@@ -27,7 +28,7 @@
     UINavigationController *navController = [UINavigationController new];
     [self.window makeKeyAndVisible];
     [window release];
-    
+
     NetworkManager *manager = [NetworkManager new];
     
     SearchPresenter *presenter = [[SearchPresenter alloc] initWithNetworkManager:manager];
@@ -37,11 +38,27 @@
     [presenter release];
     [navController pushViewController:searchViewController animated:false];
     
+    FileManager *fileManager = [[FileManager alloc] init];
+    SearchFeedItem *item = [fileManager readData];
+    [fileManager release];
+    if (item) {
+        NSMutableArray *feedItemArray = [NSMutableArray new];
+        FeedViewController *feed = [[FeedViewController alloc] initWithTitle:item.title];
+        feed.feedItemArray = feedItemArray;
+        RSSParser *parser = [RSSParser new];
+        FeedPresenter *presenter = [[FeedPresenter alloc] initWithArray:feedItemArray networkManager:[NetworkManager sharedInstance] parser:parser url:item.url];
+        feed.presenter = presenter;
+        [navController pushViewController:feed animated:false];
+        [parser release];
+        [presenter release];
+        [feed release];
+        [feedItemArray release];
+    }
+    
     
     self.window.rootViewController = navController;
     [searchViewController release];
     [navController release];
-  //  [feedItemArray release];
     return YES;
 }
 

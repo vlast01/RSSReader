@@ -76,23 +76,16 @@ NSString * const kCellID = @"cellId";
 
 - (void)showError:(NSError *)error {
 
-    @try {
-//        UIAlertController *alert = [UIAlertController alertControllerWithTitle:kErrorTitle
-//                                                                       message:error.localizedDescription
-//                                                                preferredStyle:UIAlertControllerStyleAlert];
-//        UIAlertAction* retry = [UIAlertAction actionWithTitle:kErrorRetry
-//                                                            style:UIAlertActionStyleDefault
-//                                                          handler:^(UIAlertAction * action) {
-//            [self loadNews];
-//        }];
-//        [alert addAction:retry];
-//        [self presentViewController:alert animated:YES completion:nil];
-    } @catch (NSException *exception) {
-        NSLog(@"Exception: %@", exception);
-    } @finally {
-        
-    }
- 
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:kErrorTitle
+                                                                       message:error.localizedDescription
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* retry = [UIAlertAction actionWithTitle:kErrorRetry
+                                                            style:UIAlertActionStyleDefault
+                                                          handler:^(UIAlertAction * action) {
+            [self loadNews];
+        }];
+        [alert addAction:retry];
+        [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (UITableView *)tableView {
