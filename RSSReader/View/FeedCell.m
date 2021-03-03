@@ -6,6 +6,7 @@
 //
 
 #import "FeedCell.h"
+#import "UIColor+ColorCategory.h"
 
 @interface FeedCell ()
 
@@ -35,7 +36,7 @@ int const kAdditionalStackViewSpacing = 5;
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        self.backgroundColor = [UIColor colorNamed:@"AppBackground"];
+        self.backgroundColor = [UIColor backgroundColor];
         self.descriptionTop = [self.newsDescription.topAnchor constraintEqualToAnchor:self.moreButton.bottomAnchor constant:kCellSpacing];
         self.descriptionBottom = [self.newsDescription.bottomAnchor constraintEqualToAnchor:self.contentView.bottomAnchor constant:-kCellSpacing];
         self.descriptionLeft = [self.newsDescription.leadingAnchor constraintEqualToAnchor:self.contentView.leadingAnchor constant:kCellSpacing];

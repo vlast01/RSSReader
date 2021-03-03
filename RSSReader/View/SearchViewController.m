@@ -7,12 +7,13 @@
 
 #import "SearchViewController.h"
 #import "SearchFeedItem.h"
-#import "ExceptionProtocol.h"
+#import "AlertProtocol.h"
 #import "FeedViewController.h"
 #import "UIViewController+ActivityIndicator.h"
 #import "FileManager.h"
+#import "UIColor+ColorCategory.h"
 
-@interface SearchViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, ExceptionProtocol>
+@interface SearchViewController () <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, AlertProtocol>
 
 @property (nonatomic, retain)UISearchBar *searchBar;
 @property (nonatomic, retain)UITableView *tableView;
@@ -35,7 +36,7 @@ NSString * const kDirectFeedTitle = @"Feed";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorNamed:@"AppBackground"];
+    self.view.backgroundColor = [UIColor backgroundColor];
     self.presenter.delegate = self;
     [self addViews];
     [self setupLayout];
@@ -134,20 +135,9 @@ NSString * const kDirectFeedTitle = @"Feed";
     __block typeof(self) weakSelf = self;
     [self.presenter checkDirectLink:searchBar.text completion:^(NSError * error, NSMutableArray *  array) {
         if (array.count>0) {
-            SearchFeedItem *item = [[SearchFeedItem alloc] init];
-            item.title = kDirectFeedTitle;
-            item.url = searchBar.text;
-            [self saveChoise:item];
-            [item release];
-            FeedViewController *directFeedController = [[FeedViewController alloc] initWithTitle:kDirectFeedTitle];
-            directFeedController.feedItemArray = array;
-            RSSParser *parser = [RSSParser new];
-            FeedPresenter *presenter = [[FeedPresenter alloc] initWithArray:array networkManager:[NetworkManager sharedInstance] parser:parser url:searchBar.text];
-            directFeedController.presenter = presenter;
-            [weakSelf.navigationController pushViewController:directFeedController animated:false];
-            [directFeedController release];
-            [parser release];
-            [presenter release];
+            
+            [self saveChoise:[self prepareItem:searchBar.text]];
+            [weakSelf.navigationController pushViewController:[self prepareFeedControllerToPresent:array url:searchBar.text] animated:false];
        
         } else {
             NSMutableArray *itemsArray = [NSMutableArray new];
@@ -163,7 +153,25 @@ NSString * const kDirectFeedTitle = @"Feed";
     }];
 }
 
-- (void)showException:(NSString *)message {
+- (FeedViewController *)prepareFeedControllerToPresent:(NSMutableArray *)array url:(NSString *)url{
+    FeedViewController *directFeedController = [[FeedViewController alloc] initWithTitle:kDirectFeedTitle];
+    directFeedController.feedItemArray = array;
+    RSSParser *parser = [RSSParser new];
+    FeedPresenter *presenter = [[FeedPresenter alloc] initWithArray:array networkManager:[NetworkManager sharedInstance] parser:parser url:url];
+    directFeedController.presenter = presenter;
+    [parser release];
+    [presenter release];
+    return [directFeedController autorelease];
+}
+
+- (SearchFeedItem *)prepareItem:(NSString *)url {
+    SearchFeedItem *item = [SearchFeedItem new];
+    item.title = kDirectFeedTitle;
+    item.url = url;
+    return [item autorelease];
+}
+
+- (void)showAlert:(NSString *)message {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:kErrorText
                                                                    message:message
                                                             preferredStyle:UIAlertControllerStyleAlert];

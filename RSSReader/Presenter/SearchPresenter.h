@@ -8,13 +8,13 @@
 #import <Foundation/Foundation.h>
 #import "SearchFeedItem.h"
 #import "NetworkManager.h"
-#import "ExceptionProtocol.h"
+#import "AlertProtocol.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface SearchPresenter : NSObject
 
-@property (nonatomic, assign) id <ExceptionProtocol> delegate;
+@property (nonatomic, assign) id <AlertProtocol> delegate;
 
 - (id)initWithNetworkManager:(NetworkManager *)manager;
 - (void)searchFeeds:(NSString *)url array:(NSMutableArray<SearchFeedItem *> *)array completion:(void (^)(void))completion;

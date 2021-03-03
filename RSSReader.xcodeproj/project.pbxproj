@@ -25,6 +25,7 @@
 		FB08635125E82A180065B82F /* SearchPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = FB08635025E82A180065B82F /* SearchPresenter.m */; };
 		FB08635525E82B250065B82F /* HTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = FB08635425E82B250065B82F /* HTMLParser.m */; };
 		FB08636525EC42660065B82F /* FileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FB08636425EC42660065B82F /* FileManager.m */; };
+		FB08638425EFBC690065B82F /* UIColor+ColorCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = FB08638325EFBC690065B82F /* UIColor+ColorCategory.m */; };
 		FB0F162325B0CAA300519D79 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB0F162225B0CAA300519D79 /* WebViewController.m */; };
 		FB5A49EF25DC6812002F1163 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB5A49EE25DC6812002F1163 /* Colors.xcassets */; };
 		FBEF823825AF273C00CA5C20 /* UIViewController+ActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = FBEF823725AF273C00CA5C20 /* UIViewController+ActivityIndicator.m */; };
@@ -64,9 +65,11 @@
 		FB08635025E82A180065B82F /* SearchPresenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchPresenter.m; sourceTree = "<group>"; };
 		FB08635325E82B250065B82F /* HTMLParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTMLParser.h; sourceTree = "<group>"; };
 		FB08635425E82B250065B82F /* HTMLParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HTMLParser.m; sourceTree = "<group>"; };
-		FB08635725E82C010065B82F /* ExceptionProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ExceptionProtocol.h; sourceTree = "<group>"; };
 		FB08636325EC42660065B82F /* FileManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FileManager.h; sourceTree = "<group>"; };
 		FB08636425EC42660065B82F /* FileManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FileManager.m; sourceTree = "<group>"; };
+		FB08638225EFBC690065B82F /* UIColor+ColorCategory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+ColorCategory.h"; sourceTree = "<group>"; };
+		FB08638325EFBC690065B82F /* UIColor+ColorCategory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+ColorCategory.m"; sourceTree = "<group>"; };
+		FB08638625EFC0BE0065B82F /* AlertProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlertProtocol.h; sourceTree = "<group>"; };
 		FB08F82B25B6334C008316E2 /* USCellStates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = USCellStates.h; sourceTree = "<group>"; };
 		FB0F161F25B0C60600519D79 /* CustomTableViewProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomTableViewProtocol.h; sourceTree = "<group>"; };
 		FB0F162125B0CAA300519D79 /* WebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
@@ -150,6 +153,8 @@
 				AD71CF80256EA28F008526DB /* NSDateFormatter+InitializingWithFormat.m */,
 				FBEF823625AF273C00CA5C20 /* UIViewController+ActivityIndicator.h */,
 				FBEF823725AF273C00CA5C20 /* UIViewController+ActivityIndicator.m */,
+				FB08638225EFBC690065B82F /* UIColor+ColorCategory.h */,
+				FB08638325EFBC690065B82F /* UIColor+ColorCategory.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -202,8 +207,8 @@
 		FB0F162525B0D05500519D79 /* Protocolos */ = {
 			isa = PBXGroup;
 			children = (
-				FB08635725E82C010065B82F /* ExceptionProtocol.h */,
 				FB0F161F25B0C60600519D79 /* CustomTableViewProtocol.h */,
+				FB08638625EFC0BE0065B82F /* AlertProtocol.h */,
 			);
 			path = Protocolos;
 			sourceTree = "<group>";
@@ -297,6 +302,7 @@
 				AD6B8A1D2565EB2D0039DB85 /* FeedItem.m in Sources */,
 				FB08635125E82A180065B82F /* SearchPresenter.m in Sources */,
 				AD6B8A172565E87F0039DB85 /* NetworkManager.m in Sources */,
+				FB08638425EFBC690065B82F /* UIColor+ColorCategory.m in Sources */,
 				D723D96D2562E304003DF465 /* main.m in Sources */,
 				AD71CF81256EA28F008526DB /* NSDateFormatter+InitializingWithFormat.m in Sources */,
 				FB08635525E82B250065B82F /* HTMLParser.m in Sources */,

@@ -7,6 +7,7 @@
 
 #import "WebViewController.h"
 #import <WebKit/WebKit.h>
+#import "UIColor+ColorCategory.h"
 
 @interface WebViewController () <UIScrollViewDelegate>
 
@@ -25,7 +26,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor colorNamed:@"AppBackground"];
+    self.view.backgroundColor = [UIColor backgroundColor];
     [self addViews];
     [self setupLayout];
     [self setupToolBar];

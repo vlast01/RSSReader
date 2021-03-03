@@ -14,23 +14,22 @@
 
 @end
 
+NSString * const kHistoryFolder = @"/History";
+NSString * const kDocumentsFolder = @"Documents";
+
 @implementation FileManager
 
 - (instancetype)init {
     self = [super init];
     if (self) {
-        _path = [[NSString alloc] initWithFormat:@"%@/History", [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]];
+        _path = [[NSString alloc] initWithFormat:@"%@%@", [NSHomeDirectory() stringByAppendingPathComponent:kDocumentsFolder], kHistoryFolder];
     }
     return self;
 }
 
 - (void)writeToFile:(SearchFeedItem *)item {
-
-    NSLog(@"%@",[self readData]);
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:item requiringSecureCoding:YES error:nil];
     [data writeToFile:self.path atomically:NO];
-    NSLog(@"%@",[self readData]);
-    
 }
 
 - (SearchFeedItem *)readData {
