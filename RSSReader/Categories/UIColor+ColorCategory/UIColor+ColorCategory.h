@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface UIColor (ColorCategory)
 
 + (UIColor *)backgroundColor;
++ (UIColor *)borderColor;
 
 @end
 

@@ -21,9 +21,7 @@
 
 - (id)initWithArray:(NSMutableArray *)array networkManager:(NetworkManager *)manager parser:(RSSParser *)parser url:(NSString *)url {
     if (self = [super init]) {
-        if (array) {
-            _feedItemArray = [array retain];
-        }
+        _feedItemArray = [array retain];
         _url = [url retain];
         _networkManager = [manager retain];
         _parser = [parser retain];

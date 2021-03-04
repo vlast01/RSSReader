@@ -9,14 +9,16 @@
 
 @implementation UIViewController (ActivityIndicator)
 
-- (void)showActivityIndicator {
+- (void)showActivityIndicator:(UIActivityIndicatorView *)spinner {
     UIApplication *app = [UIApplication sharedApplication];
     app.networkActivityIndicatorVisible = YES;
+    [spinner startAnimating];
 }
 
-- (void)hideActivityIndicator {
+- (void)hideActivityIndicator:(UIActivityIndicatorView *)spinner {
     UIApplication *app = [UIApplication sharedApplication];
     app.networkActivityIndicatorVisible = NO;
+    [spinner stopAnimating];
 }
 
 @end

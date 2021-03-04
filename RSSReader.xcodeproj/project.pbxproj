@@ -93,14 +93,10 @@
 		AD6B8A0125657C7F0039DB85 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				AD6B8A0425657CCF0039DB85 /* FeedViewController.h */,
-				AD6B8A0525657CCF0039DB85 /* FeedViewController.m */,
-				AD6B8A092565E00F0039DB85 /* FeedCell.h */,
-				AD6B8A0A2565E00F0039DB85 /* FeedCell.m */,
-				FB0F162125B0CAA300519D79 /* WebViewController.h */,
-				FB0F162225B0CAA300519D79 /* WebViewController.m */,
-				FB08634725E828C30065B82F /* SearchViewController.h */,
-				FB08634825E828C30065B82F /* SearchViewController.m */,
+				FB17F98525F18A9A00A3F8DE /* SearchViewController */,
+				FB17F97B25F18A6700A3F8DE /* FeedViewController */,
+				FB17F98225F18A8D00A3F8DE /* WebViewController */,
+				FB17F97D25F18A7500A3F8DE /* Cells */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -108,14 +104,9 @@
 		AD6B8A142565E7200039DB85 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				AD6B8A152565E87F0039DB85 /* NetworkManager.h */,
-				AD6B8A162565E87F0039DB85 /* NetworkManager.m */,
-				AD6B8A2D2566A65E0039DB85 /* RSSParser.h */,
-				AD6B8A2E2566A65E0039DB85 /* RSSParser.m */,
-				FB08635325E82B250065B82F /* HTMLParser.h */,
-				FB08635425E82B250065B82F /* HTMLParser.m */,
-				FB08636325EC42660065B82F /* FileManager.h */,
-				FB08636425EC42660065B82F /* FileManager.m */,
+				FB17F98725F18AB300A3F8DE /* NetworkManager */,
+				FB17F99025F18B0500A3F8DE /* FileManager */,
+				FB17F98B25F18AE200A3F8DE /* Parsers */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -123,10 +114,8 @@
 		AD6B8A1A2565EAE90039DB85 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				AD6B8A1B2565EB2D0039DB85 /* FeedItem.h */,
-				AD6B8A1C2565EB2D0039DB85 /* FeedItem.m */,
-				FB08634B25E829D80065B82F /* SearchFeedItem.h */,
-				FB08634C25E829D80065B82F /* SearchFeedItem.m */,
+				FB17F99225F18B1B00A3F8DE /* FeedItem */,
+				FB17F99425F18B2800A3F8DE /* SearchFeedItem */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -134,10 +123,8 @@
 		AD6B8A202565EF050039DB85 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				AD6B8A282565F6EA0039DB85 /* FeedPresenter.h */,
-				AD6B8A292565F6EA0039DB85 /* FeedPresenter.m */,
-				FB08634F25E82A180065B82F /* SearchPresenter.h */,
-				FB08635025E82A180065B82F /* SearchPresenter.m */,
+				FB17F99625F18B3400A3F8DE /* FeedPresenter */,
+				FB17F99825F18B3C00A3F8DE /* SearchPresenter */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -145,16 +132,11 @@
 		AD71CF83256EA35C008526DB /* Categories */ = {
 			isa = PBXGroup;
 			children = (
-				AD71CF76256DB26F008526DB /* NSString+DateConverter.h */,
-				AD71CF77256DB26F008526DB /* NSString+DateConverter.m */,
-				AD71CF7B256EA093008526DB /* NSXMLParser+InitializationWithDelegate.h */,
-				AD71CF7C256EA093008526DB /* NSXMLParser+InitializationWithDelegate.m */,
-				AD71CF7F256EA28F008526DB /* NSDateFormatter+InitializingWithFormat.h */,
-				AD71CF80256EA28F008526DB /* NSDateFormatter+InitializingWithFormat.m */,
-				FBEF823625AF273C00CA5C20 /* UIViewController+ActivityIndicator.h */,
-				FBEF823725AF273C00CA5C20 /* UIViewController+ActivityIndicator.m */,
-				FB08638225EFBC690065B82F /* UIColor+ColorCategory.h */,
-				FB08638325EFBC690065B82F /* UIColor+ColorCategory.m */,
+				FB17F99A25F18B7E00A3F8DE /* NSString+DateConverter */,
+				FB17F99C25F18B9100A3F8DE /* NSXMLParser+InitializationWithDelegate */,
+				FB17F99E25F18BA700A3F8DE /* NSDateFormatter+InitializingWithFormat */,
+				FB17F9A125F18BC800A3F8DE /* UIViewController+ActivityIndicator */,
+				FB17F9A325F18BD200A3F8DE /* UIColor+ColorCategory */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -211,6 +193,176 @@
 				FB08638625EFC0BE0065B82F /* AlertProtocol.h */,
 			);
 			path = Protocolos;
+			sourceTree = "<group>";
+		};
+		FB17F97B25F18A6700A3F8DE /* FeedViewController */ = {
+			isa = PBXGroup;
+			children = (
+				AD6B8A0425657CCF0039DB85 /* FeedViewController.h */,
+				AD6B8A0525657CCF0039DB85 /* FeedViewController.m */,
+			);
+			path = FeedViewController;
+			sourceTree = "<group>";
+		};
+		FB17F97D25F18A7500A3F8DE /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				FB17F97F25F18A8400A3F8DE /* FeedCell */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		FB17F97F25F18A8400A3F8DE /* FeedCell */ = {
+			isa = PBXGroup;
+			children = (
+				AD6B8A092565E00F0039DB85 /* FeedCell.h */,
+				AD6B8A0A2565E00F0039DB85 /* FeedCell.m */,
+			);
+			path = FeedCell;
+			sourceTree = "<group>";
+		};
+		FB17F98225F18A8D00A3F8DE /* WebViewController */ = {
+			isa = PBXGroup;
+			children = (
+				FB0F162125B0CAA300519D79 /* WebViewController.h */,
+				FB0F162225B0CAA300519D79 /* WebViewController.m */,
+			);
+			path = WebViewController;
+			sourceTree = "<group>";
+		};
+		FB17F98525F18A9A00A3F8DE /* SearchViewController */ = {
+			isa = PBXGroup;
+			children = (
+				FB08634725E828C30065B82F /* SearchViewController.h */,
+				FB08634825E828C30065B82F /* SearchViewController.m */,
+			);
+			path = SearchViewController;
+			sourceTree = "<group>";
+		};
+		FB17F98725F18AB300A3F8DE /* NetworkManager */ = {
+			isa = PBXGroup;
+			children = (
+				AD6B8A152565E87F0039DB85 /* NetworkManager.h */,
+				AD6B8A162565E87F0039DB85 /* NetworkManager.m */,
+			);
+			path = NetworkManager;
+			sourceTree = "<group>";
+		};
+		FB17F98B25F18AE200A3F8DE /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				FB17F98C25F18AEB00A3F8DE /* RSSParser */,
+				FB17F98E25F18AF500A3F8DE /* HTMLParser */,
+			);
+			path = Parsers;
+			sourceTree = "<group>";
+		};
+		FB17F98C25F18AEB00A3F8DE /* RSSParser */ = {
+			isa = PBXGroup;
+			children = (
+				AD6B8A2D2566A65E0039DB85 /* RSSParser.h */,
+				AD6B8A2E2566A65E0039DB85 /* RSSParser.m */,
+			);
+			path = RSSParser;
+			sourceTree = "<group>";
+		};
+		FB17F98E25F18AF500A3F8DE /* HTMLParser */ = {
+			isa = PBXGroup;
+			children = (
+				FB08635325E82B250065B82F /* HTMLParser.h */,
+				FB08635425E82B250065B82F /* HTMLParser.m */,
+			);
+			path = HTMLParser;
+			sourceTree = "<group>";
+		};
+		FB17F99025F18B0500A3F8DE /* FileManager */ = {
+			isa = PBXGroup;
+			children = (
+				FB08636325EC42660065B82F /* FileManager.h */,
+				FB08636425EC42660065B82F /* FileManager.m */,
+			);
+			path = FileManager;
+			sourceTree = "<group>";
+		};
+		FB17F99225F18B1B00A3F8DE /* FeedItem */ = {
+			isa = PBXGroup;
+			children = (
+				AD6B8A1B2565EB2D0039DB85 /* FeedItem.h */,
+				AD6B8A1C2565EB2D0039DB85 /* FeedItem.m */,
+			);
+			path = FeedItem;
+			sourceTree = "<group>";
+		};
+		FB17F99425F18B2800A3F8DE /* SearchFeedItem */ = {
+			isa = PBXGroup;
+			children = (
+				FB08634B25E829D80065B82F /* SearchFeedItem.h */,
+				FB08634C25E829D80065B82F /* SearchFeedItem.m */,
+			);
+			path = SearchFeedItem;
+			sourceTree = "<group>";
+		};
+		FB17F99625F18B3400A3F8DE /* FeedPresenter */ = {
+			isa = PBXGroup;
+			children = (
+				AD6B8A282565F6EA0039DB85 /* FeedPresenter.h */,
+				AD6B8A292565F6EA0039DB85 /* FeedPresenter.m */,
+			);
+			path = FeedPresenter;
+			sourceTree = "<group>";
+		};
+		FB17F99825F18B3C00A3F8DE /* SearchPresenter */ = {
+			isa = PBXGroup;
+			children = (
+				FB08634F25E82A180065B82F /* SearchPresenter.h */,
+				FB08635025E82A180065B82F /* SearchPresenter.m */,
+			);
+			path = SearchPresenter;
+			sourceTree = "<group>";
+		};
+		FB17F99A25F18B7E00A3F8DE /* NSString+DateConverter */ = {
+			isa = PBXGroup;
+			children = (
+				AD71CF76256DB26F008526DB /* NSString+DateConverter.h */,
+				AD71CF77256DB26F008526DB /* NSString+DateConverter.m */,
+			);
+			path = "NSString+DateConverter";
+			sourceTree = "<group>";
+		};
+		FB17F99C25F18B9100A3F8DE /* NSXMLParser+InitializationWithDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				AD71CF7B256EA093008526DB /* NSXMLParser+InitializationWithDelegate.h */,
+				AD71CF7C256EA093008526DB /* NSXMLParser+InitializationWithDelegate.m */,
+			);
+			path = "NSXMLParser+InitializationWithDelegate";
+			sourceTree = "<group>";
+		};
+		FB17F99E25F18BA700A3F8DE /* NSDateFormatter+InitializingWithFormat */ = {
+			isa = PBXGroup;
+			children = (
+				AD71CF7F256EA28F008526DB /* NSDateFormatter+InitializingWithFormat.h */,
+				AD71CF80256EA28F008526DB /* NSDateFormatter+InitializingWithFormat.m */,
+			);
+			path = "NSDateFormatter+InitializingWithFormat";
+			sourceTree = "<group>";
+		};
+		FB17F9A125F18BC800A3F8DE /* UIViewController+ActivityIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				FBEF823625AF273C00CA5C20 /* UIViewController+ActivityIndicator.h */,
+				FBEF823725AF273C00CA5C20 /* UIViewController+ActivityIndicator.m */,
+			);
+			path = "UIViewController+ActivityIndicator";
+			sourceTree = "<group>";
+		};
+		FB17F9A325F18BD200A3F8DE /* UIColor+ColorCategory */ = {
+			isa = PBXGroup;
+			children = (
+				FB08638225EFBC690065B82F /* UIColor+ColorCategory.h */,
+				FB08638325EFBC690065B82F /* UIColor+ColorCategory.m */,
+			);
+			path = "UIColor+ColorCategory";
 			sourceTree = "<group>";
 		};
 		FBEE717525B882B800FE6A1B /* Enums */ = {

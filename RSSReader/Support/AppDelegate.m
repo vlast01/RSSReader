@@ -25,41 +25,55 @@
     
     UIWindow *window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     self.window = window;
-    UINavigationController *navController = [UINavigationController new];
+    UINavigationController *navController = [self prepareNavController];
     [self.window makeKeyAndVisible];
     [window release];
 
-    NetworkManager *manager = [NetworkManager new];
+    [navController pushViewController:[self prepareSearchViewController] animated:false];
     
-    SearchPresenter *presenter = [[SearchPresenter alloc] initWithNetworkManager:manager];
-    [manager release];
-    SearchViewController *searchViewController = [SearchViewController new];
-    searchViewController.presenter = presenter;
-    [presenter release];
-    [navController pushViewController:searchViewController animated:false];
+    SearchFeedItem *item = [self getLastChoise];
+
+    if (item) {
+        [navController pushViewController:[self prepareFeedViewControllerWithItem:item] animated:false];
+    }
     
+    self.window.rootViewController = navController;
+    return YES;
+}
+
+- (SearchFeedItem *)getLastChoise {
     FileManager *fileManager = [[FileManager alloc] init];
     SearchFeedItem *item = [fileManager readData];
     [fileManager release];
-    if (item) {
-        NSMutableArray *feedItemArray = [NSMutableArray new];
-        FeedViewController *feed = [[FeedViewController alloc] initWithTitle:item.title];
-        feed.feedItemArray = feedItemArray;
-        RSSParser *parser = [RSSParser new];
-        FeedPresenter *presenter = [[FeedPresenter alloc] initWithArray:feedItemArray networkManager:[NetworkManager sharedInstance] parser:parser url:item.url];
-        feed.presenter = presenter;
-        [navController pushViewController:feed animated:false];
-        [parser release];
-        [presenter release];
-        [feed release];
-        [feedItemArray release];
-    }
-    
-    
-    self.window.rootViewController = navController;
-    [searchViewController release];
-    [navController release];
-    return YES;
+    return item;
+}
+
+- (UINavigationController *)prepareNavController {
+    UINavigationController *navController = [UINavigationController new];
+    [navController.navigationBar setTintColor:UIColor.blackColor];
+    navController.navigationBar.backgroundColor = UIColor.whiteColor;
+    return [navController autorelease];
+}
+
+- (FeedViewController *)prepareFeedViewControllerWithItem:(SearchFeedItem *)item{
+    NSMutableArray *feedItemArray = [NSMutableArray new];
+    FeedViewController *feed = [[FeedViewController alloc] initWithTitle:item.title];
+    feed.feedItemArray = feedItemArray;
+    RSSParser *parser = [RSSParser new];
+    FeedPresenter *presenter = [[FeedPresenter alloc] initWithArray:feedItemArray networkManager:[NetworkManager sharedInstance] parser:parser url:item.url];
+    feed.presenter = presenter;
+    [parser release];
+    [presenter release];
+    [feedItemArray release];
+    return [feed autorelease];
+}
+
+- (SearchViewController *)prepareSearchViewController {
+    SearchPresenter *presenter = [[SearchPresenter alloc] initWithNetworkManager:[NetworkManager sharedInstance]];
+    SearchViewController *searchViewController = [SearchViewController new];
+    searchViewController.presenter = presenter;
+    [presenter release];
+    return [searchViewController autorelease];
 }
 
 

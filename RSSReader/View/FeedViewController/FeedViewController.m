@@ -11,16 +11,17 @@
 #import "UIViewController+ActivityIndicator.h"
 #import "CustomTableViewProtocol.h"
 #import "WebViewController.h"
+#import "UIColor+ColorCategory.h"
 
 @interface FeedViewController () <UITableViewDataSource, UITableViewDelegate, CustomTableViewProtocol>
 
 @property (nonatomic, retain) UITableView* tableView;
 @property (nonatomic, copy) NSString *pageTitle;
 @property (nonatomic, retain) NSMutableDictionary *cellHeightsDictionary;
+@property (nonatomic, retain) UIActivityIndicatorView* spinner;
 
 @end
 
-NSString * const kPageTitle = @"TUT.BY";
 NSString * const kErrorTitle = @"Error";
 NSString * const kErrorRetry = @"Retry";
 NSString * const kCellID = @"cellId";
@@ -49,6 +50,7 @@ NSString * const kCellID = @"cellId";
 
 - (void)addViews {
     [self.view addSubview:self.tableView];
+    [self.view addSubview:self.spinner];
 }
 
 - (void)setupLayout {
@@ -57,14 +59,16 @@ NSString * const kCellID = @"cellId";
         [self.tableView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
         [self.tableView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
         [self.tableView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+        [self.spinner.centerYAnchor constraintEqualToAnchor:self.view.centerYAnchor],
+        [self.spinner.centerXAnchor constraintEqualToAnchor:self.view.centerXAnchor],
     ]];
 }
 
 - (void)loadNews {
-    [self showActivityIndicator];
+    [self showActivityIndicator:self.spinner];
     __block typeof(self) weakSelf = self;
     [self.presenter asyncLoadNewsWithCompletion:^(NSError *error) {
-        [weakSelf hideActivityIndicator];
+        [weakSelf hideActivityIndicator:self.spinner];
         if (!error) {
             [weakSelf.tableView reloadData];
         }
@@ -76,10 +80,10 @@ NSString * const kCellID = @"cellId";
 
 - (void)showError:(NSError *)error {
 
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:kErrorTitle
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(kErrorTitle, nil)
                                                                        message:error.localizedDescription
                                                                 preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* retry = [UIAlertAction actionWithTitle:kErrorRetry
+        UIAlertAction* retry = [UIAlertAction actionWithTitle:NSLocalizedString(kErrorRetry, nil)
                                                             style:UIAlertActionStyleDefault
                                                           handler:^(UIAlertAction * action) {
             [self loadNews];
@@ -94,9 +98,19 @@ NSString * const kCellID = @"cellId";
         _tableView.translatesAutoresizingMaskIntoConstraints = NO;
         _tableView.dataSource = self;
         _tableView.delegate = self;
+        [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
         [_tableView registerClass:FeedCell.class forCellReuseIdentifier:kCellID];
+        _tableView.backgroundColor = [UIColor backgroundColor];
     }
     return _tableView;
+}
+
+- (UIActivityIndicatorView *)spinner {
+    if (!_spinner) {
+        _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        _spinner.translatesAutoresizingMaskIntoConstraints = NO;
+    }
+    return _spinner;
 }
 
 - (NSMutableDictionary *)cellHeightsDictionary {
@@ -154,6 +168,7 @@ NSString * const kCellID = @"cellId";
     [_feedItemArray release];
     [_pageTitle release];
     [_cellHeightsDictionary release];
+    [_spinner release];
     [super dealloc];
 }
 
