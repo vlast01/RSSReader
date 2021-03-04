@@ -13,19 +13,16 @@
 @property (nonatomic, retain) RSSParser *parser;
 @property (nonatomic, retain) NSMutableArray* feedItemArray;
 @property (nonatomic, copy) void (^completion)(NSError *);
+@property (nonatomic, copy) NSString *url;
 
 @end
 
 @implementation FeedPresenter
 
-- (id)initWithArray:(NSMutableArray *)array networkManager:(NetworkManager *)manager parser:(RSSParser *)parser{
+- (id)initWithArray:(NSMutableArray *)array networkManager:(NetworkManager *)manager parser:(RSSParser *)parser url:(NSString *)url {
     if (self = [super init]) {
-        if (array) {
-            _feedItemArray = [array retain];
-        }
-        else {
-            _feedItemArray = [NSMutableArray new];
-        }
+        _feedItemArray = [array retain];
+        _url = [url retain];
         _networkManager = [manager retain];
         _parser = [parser retain];
     }
@@ -42,7 +39,7 @@
 - (void)loadNews {
     @autoreleasepool {
         __block typeof(self) weakSelf = self;
-        [self.networkManager loadFeedWithCompletion:^(NSData * data, NSError *error) {
+        [self.networkManager loadFeed:self.url completion:^(NSData * data, NSError *error) {
             if (error && weakSelf.completion) {
                 weakSelf.completion(error);
             }
@@ -59,11 +56,19 @@
     }];
 }
 
+- (NSMutableArray *)feedItemArray {
+    if (!_feedItemArray) {
+        _feedItemArray = [NSMutableArray new];
+    }
+    return _feedItemArray;
+}
+
 - (void)dealloc {
     [_networkManager release];
     [_feedItemArray release];
     [_parser release];
     [_completion release];
+    [_url release];
     [super dealloc];
 }
 @end

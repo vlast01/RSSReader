@@ -13,7 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NetworkManager : NSObject
 
 + (instancetype)sharedInstance;
-- (void)loadFeedWithCompletion:(void (^)(NSData* _Nullable, NSError* _Nullable))completion;
+- (void)loadFeed:(NSString *)url completion:(void (^)(NSData* _Nullable, NSError* _Nullable))completion;
+- (NSString *)downloadHTML:(NSString *)url;
 
 @end
 

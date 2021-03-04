@@ -10,6 +10,9 @@
 #import "FeedPresenter.h"
 #import "NetworkManager.h"
 #import "RSSParser.h"
+#import "SearchPresenter.h"
+#import "SearchViewController.h"
+#import "FileManager.h"
 
 @interface AppDelegate ()
 
@@ -22,21 +25,55 @@
     
     UIWindow *window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
     self.window = window;
-    UINavigationController *navController = [UINavigationController new];
-    NSMutableArray *feedItemArray = [NSMutableArray new];
-    RSSParser *parser = [[RSSParser alloc] init];
-    FeedPresenter *presenter = [[FeedPresenter alloc] initWithArray:feedItemArray networkManager:[NetworkManager sharedInstance] parser:parser];
-    [parser release];
-    FeedViewController *feed = [[FeedViewController alloc] initWithFeedItemArray:feedItemArray presenter:presenter];
-    [presenter release];
-    [navController pushViewController:feed animated:false];
+    UINavigationController *navController = [self prepareNavController];
     [self.window makeKeyAndVisible];
-    [feed release];
     [window release];
+
+    [navController pushViewController:[self prepareSearchViewController] animated:false];
+    
+    SearchFeedItem *item = [self getLastChoise];
+
+    if (item) {
+        [navController pushViewController:[self prepareFeedViewControllerWithItem:item] animated:false];
+    }
+    
     self.window.rootViewController = navController;
-    [navController release];
-    [feedItemArray release];
     return YES;
+}
+
+- (SearchFeedItem *)getLastChoise {
+    FileManager *fileManager = [[FileManager alloc] init];
+    SearchFeedItem *item = [fileManager readData];
+    [fileManager release];
+    return item;
+}
+
+- (UINavigationController *)prepareNavController {
+    UINavigationController *navController = [UINavigationController new];
+    [navController.navigationBar setTintColor:UIColor.blackColor];
+    navController.navigationBar.backgroundColor = UIColor.whiteColor;
+    return [navController autorelease];
+}
+
+- (FeedViewController *)prepareFeedViewControllerWithItem:(SearchFeedItem *)item{
+    NSMutableArray *feedItemArray = [NSMutableArray new];
+    FeedViewController *feed = [[FeedViewController alloc] initWithTitle:item.title];
+    feed.feedItemArray = feedItemArray;
+    RSSParser *parser = [RSSParser new];
+    FeedPresenter *presenter = [[FeedPresenter alloc] initWithArray:feedItemArray networkManager:[NetworkManager sharedInstance] parser:parser url:item.url];
+    feed.presenter = presenter;
+    [parser release];
+    [presenter release];
+    [feedItemArray release];
+    return [feed autorelease];
+}
+
+- (SearchViewController *)prepareSearchViewController {
+    SearchPresenter *presenter = [[SearchPresenter alloc] initWithNetworkManager:[NetworkManager sharedInstance]];
+    SearchViewController *searchViewController = [SearchViewController new];
+    searchViewController.presenter = presenter;
+    [presenter release];
+    return [searchViewController autorelease];
 }
 
 
