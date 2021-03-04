@@ -25,6 +25,9 @@
 NSString * const kErrorTitle = @"Error";
 NSString * const kErrorRetry = @"Retry";
 NSString * const kCellID = @"cellId";
+NSString * const kReloadAlertMessage = @"Reload feed?";
+NSString * const kYesActionTitle = @"Yes";
+NSString * const kNoActionTitle = @"NO";
 
 @implementation FeedViewController
 
@@ -160,6 +163,32 @@ NSString * const kCellID = @"cellId";
     [self.tableView performBatchUpdates:^{
         [self.tableView reloadRowsAtIndexPaths:@[path] withRowAnimation:UITableViewRowAnimationNone];
     } completion:nil];
+}
+
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+    if (motion == UIEventSubtypeMotionShake) {
+        [self showRefreshAlert];
+    }
+}
+
+- (void)showRefreshAlert {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(kReloadAlertMessage, nil)
+                                                                   message:nil
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction* Yes = [UIAlertAction actionWithTitle:NSLocalizedString(kYesActionTitle, nil)
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction * action) {
+        [self.feedItemArray removeAllObjects];
+        [self loadNews];
+    }];
+    
+    UIAlertAction* No = [UIAlertAction actionWithTitle:NSLocalizedString(kNoActionTitle, nil)
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction * action) {
+    }];
+    [alert addAction:Yes];
+    [alert addAction:No];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)dealloc {
