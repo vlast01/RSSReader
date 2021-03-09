@@ -166,15 +166,17 @@ NSString * const kNoActionTitle = @"NO";
 }
 
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
-    if (motion == UIEventSubtypeMotionShake) {
-        [self showRefreshAlert];
+    switch (motion) {
+        case UIEventSubtypeMotionShake:
+            [self showRefreshAlert];
+            break;
+        default:
+            break;
     }
 }
 
 - (void)showRefreshAlert {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(kReloadAlertMessage, nil)
-                                                                   message:nil
-                                                            preferredStyle:UIAlertControllerStyleAlert];
+
     UIAlertAction* Yes = [UIAlertAction actionWithTitle:NSLocalizedString(kYesActionTitle, nil)
                                                         style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction * action) {
@@ -186,9 +188,7 @@ NSString * const kNoActionTitle = @"NO";
                                                         style:UIAlertActionStyleDefault
                                                       handler:^(UIAlertAction * action) {
     }];
-    [alert addAction:Yes];
-    [alert addAction:No];
-    [self presentViewController:alert animated:YES completion:nil];
+    [self showRefreshAlertWithAlertActions:Yes secondAction:No];
 }
 
 - (void)dealloc {

@@ -65,13 +65,13 @@ NSString * const kLessTitle = @"Less";
         self.newsDescription.text = self.feedItem.newsDescription;
         [NSLayoutConstraint activateConstraints:@[self.descriptionTop, self.descriptionLeft, self.descriptionRight, self.descriptionBottom
         ]];
-        [self.moreButton setTitle:[NSString stringWithFormat:@"%@ %C",NSLocalizedString(kMoreTitle, nil), 0x2191] forState:UIControlStateNormal];
+        [self.moreButton setTitle:[NSString stringWithFormat:@"%@ %C",NSLocalizedString(kLessTitle, nil), 0x2191] forState:UIControlStateNormal];
     }
     else {
         self.newsDescription.text = @"";
         [NSLayoutConstraint deactivateConstraints:@[self.descriptionTop, self.descriptionLeft, self.descriptionRight, self.descriptionBottom
         ]];
-        [self.moreButton setTitle:[NSString stringWithFormat:@"%@ %C",NSLocalizedString(kLessTitle, nil), 0x2193] forState:UIControlStateNormal];
+        [self.moreButton setTitle:[NSString stringWithFormat:@"%@ %C",NSLocalizedString(kMoreTitle, nil), 0x2193] forState:UIControlStateNormal];
     }}
 
 - (void)addViews {

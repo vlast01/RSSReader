@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)showActivityIndicator:(UIActivityIndicatorView *)spinner;
 - (void)hideActivityIndicator:(UIActivityIndicatorView *)spinner;
+- (void)showRefreshAlertWithAlertActions:(UIAlertAction *)firstAction secondAction:(UIAlertAction *)secondAction;
 
 @end
 
