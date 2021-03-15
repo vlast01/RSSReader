@@ -21,4 +21,14 @@
     [spinner stopAnimating];
 }
 
+- (void)showRefreshAlertWithAlertActions:(UIAlertAction *)firstAction secondAction:(UIAlertAction *)secondAction {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Reload feed?", nil)
+                                                                   message:nil
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+
+    [alert addAction:firstAction];
+    [alert addAction:secondAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 @end
