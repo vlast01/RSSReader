@@ -42,7 +42,9 @@ NSString * const kNoActionTitle = @"NO";
     [super viewDidLoad];
     [self addViews];
     [self setupLayout];
-    [self loadNews];
+    if (self.feedItemArray.count==0) {
+        [self loadNews];
+    }
     self.navigationItem.title = self.pageTitle;
 }
 
@@ -82,7 +84,7 @@ NSString * const kNoActionTitle = @"NO";
 }
 
 - (void)showError:(NSError *)error {
-
+    
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(kErrorTitle, nil)
                                                                        message:error.localizedDescription
                                                                 preferredStyle:UIAlertControllerStyleAlert];
