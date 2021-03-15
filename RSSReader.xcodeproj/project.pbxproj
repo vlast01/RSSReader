@@ -27,6 +27,7 @@
 		FB08636525EC42660065B82F /* FileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FB08636425EC42660065B82F /* FileManager.m */; };
 		FB08638425EFBC690065B82F /* UIColor+ColorCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = FB08638325EFBC690065B82F /* UIColor+ColorCategory.m */; };
 		FB0F162325B0CAA300519D79 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FB0F162225B0CAA300519D79 /* WebViewController.m */; };
+		FB2EDA6925FFB56E0037F46E /* HTMLParserRuntime.m in Sources */ = {isa = PBXBuildFile; fileRef = FB2EDA6825FFB56E0037F46E /* HTMLParserRuntime.m */; };
 		FB5A49EF25DC6812002F1163 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB5A49EE25DC6812002F1163 /* Colors.xcassets */; };
 		FBBF391025F80B500093DFFD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FBBF391225F80B500093DFFD /* Localizable.strings */; };
 		FBEF823825AF273C00CA5C20 /* UIViewController+ActivityIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = FBEF823725AF273C00CA5C20 /* UIViewController+ActivityIndicator.m */; };
@@ -75,6 +76,8 @@
 		FB0F161F25B0C60600519D79 /* CustomTableViewProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomTableViewProtocol.h; sourceTree = "<group>"; };
 		FB0F162125B0CAA300519D79 /* WebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		FB0F162225B0CAA300519D79 /* WebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		FB2EDA6725FFB56E0037F46E /* HTMLParserRuntime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HTMLParserRuntime.h; sourceTree = "<group>"; };
+		FB2EDA6825FFB56E0037F46E /* HTMLParserRuntime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HTMLParserRuntime.m; sourceTree = "<group>"; };
 		FB5A49EE25DC6812002F1163 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		FBBF390B25F806D10093DFFD /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		FBBF391125F80B500093DFFD /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -258,6 +261,7 @@
 			children = (
 				FB17F98C25F18AEB00A3F8DE /* RSSParser */,
 				FB17F98E25F18AF500A3F8DE /* HTMLParser */,
+				FB2EDA6B25FFB5760037F46E /* HTMLParserRuntime */,
 			);
 			path = Parsers;
 			sourceTree = "<group>";
@@ -370,6 +374,15 @@
 			path = "UIColor+ColorCategory";
 			sourceTree = "<group>";
 		};
+		FB2EDA6B25FFB5760037F46E /* HTMLParserRuntime */ = {
+			isa = PBXGroup;
+			children = (
+				FB2EDA6725FFB56E0037F46E /* HTMLParserRuntime.h */,
+				FB2EDA6825FFB56E0037F46E /* HTMLParserRuntime.m */,
+			);
+			path = HTMLParserRuntime;
+			sourceTree = "<group>";
+		};
 		FBEE717525B882B800FE6A1B /* Enums */ = {
 			isa = PBXGroup;
 			children = (
@@ -461,6 +474,7 @@
 				AD6B8A1D2565EB2D0039DB85 /* FeedItem.m in Sources */,
 				FB08635125E82A180065B82F /* SearchPresenter.m in Sources */,
 				AD6B8A172565E87F0039DB85 /* NetworkManager.m in Sources */,
+				FB2EDA6925FFB56E0037F46E /* HTMLParserRuntime.m in Sources */,
 				FB08638425EFBC690065B82F /* UIColor+ColorCategory.m in Sources */,
 				D723D96D2562E304003DF465 /* main.m in Sources */,
 				AD71CF81256EA28F008526DB /* NSDateFormatter+InitializingWithFormat.m in Sources */,

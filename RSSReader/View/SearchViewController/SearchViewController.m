@@ -142,14 +142,12 @@ NSString * const kDirectFeedTitle = @"Feed";
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
     [self showActivityIndicator:self.spinner];
-
     __block typeof(self) weakSelf = self;
     [self.presenter checkDirectLink:searchBar.text completion:^(NSError * error, NSMutableArray *  array) {
         if (array.count>0) {
             [self hideActivityIndicator:self.spinner];
             [self saveChoise:[self prepareItem:searchBar.text]];
             [weakSelf.navigationController pushViewController:[self prepareFeedControllerToPresent:array url:searchBar.text] animated:YES];
-       
         } else {
             NSMutableArray *itemsArray = [NSMutableArray new];
             weakSelf.itemsArray = itemsArray;
